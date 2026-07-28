@@ -95,11 +95,11 @@
   --info: #0095ff;
 
   /* Borders */
-  --border: rgba(118, 166, 70, 0.15);
-  --input: #eae8ec;
-  --ring: #76a646;
+  --border: rgb(44, 44, 46, 0.15);
+  --input: ;
+  --ring: rgb(44, 44, 46, 0.15);
 
-  --radius: 0.5rem;
+  --radius: 0.4rem;
 }
 
 .dark {

@@ -1,3 +1,14 @@
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
+
 export default function TransactionsTable({ transactions }) {
   if (transactions.length === 0) {
     return (
@@ -7,5 +18,50 @@ export default function TransactionsTable({ transactions }) {
     );
   }
 
-  return <div className="rounded-lg border"></div>;
+  return (
+    <div className="rounded-lg border">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Date</TableHead>
+            <TableHead>Description</TableHead>
+            <TableHead>Category</TableHead>
+            <TableHead>Type</TableHead>
+            <TableHead className="text-right">Amount</TableHead>
+          </TableRow>
+        </TableHeader>
+
+        <TableBody>
+          {transactions.map((transaction, index) => (
+            <TableRow key={index}>
+              <TableCell>{transaction.date}</TableCell>
+              <TableCell>{transaction.description}</TableCell>
+              <TableCell> {transaction.category}</TableCell>
+              <TableCell>
+                <Badge
+                  variant={
+                    transaction.type === "income" ? "accent" : "secondary"
+                  }
+                  className="py-3"
+                >
+                  {transaction.type}
+                </Badge>
+              </TableCell>
+              <TableCell
+                className={cn(
+                  "text-right ",
+                  transaction.type === "income"
+                    ? "text-primary"
+                    : "text-destructive",
+                )}
+              >
+                {transaction.type === "expense" ? "-₱ " : "₱ "}
+                {transaction.amount.toLocaleString()}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  );
 }

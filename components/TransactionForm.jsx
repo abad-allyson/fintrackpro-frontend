@@ -1,6 +1,8 @@
 "use client";
 
+import { useAuth } from "@clerk/nextjs";
 import { useState } from "react";
+import { addTransaction } from "@/services/transaction.service";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,7 +23,7 @@ const initialForm = {
   date: "",
   description: "",
   category: "",
-  type: "",
+  type: "income",
   amount: "",
 };
 
@@ -37,10 +39,18 @@ const categories = [
 export default function TransactionForm({ onCancel, onSuccess }) {
   const [form, setForm] = useState(initialForm);
   const [loading, setLoading] = useState(false);
+  const { getToken } = useAuth();
 
   function handleChange(e) {
     const { name, value } = e.target;
 
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
+
+  function handleValueChange(name, value) {
     setForm((prev) => ({
       ...prev,
       [name]: value,
@@ -57,9 +67,9 @@ export default function TransactionForm({ onCancel, onSuccess }) {
 
     try {
       setLoading(true);
+      const token = await getToken();
 
-      // API call
-      console.log(form);
+      await addTransaction(form, token);
 
       setForm(initialForm);
 
@@ -100,7 +110,11 @@ export default function TransactionForm({ onCancel, onSuccess }) {
       {/* Category */}
       <div className="space-y-2">
         <Label htmlFor="category">Category</Label>
-        <Select items={categories}>
+        <Select
+          items={categories}
+          value={form.category}
+          onValueChange={(value) => handleValueChange("category", value)}
+        >
           <SelectTrigger className="w-full">
             <SelectValue />
           </SelectTrigger>
@@ -121,7 +135,10 @@ export default function TransactionForm({ onCancel, onSuccess }) {
       <div className="space-y-2">
         <Label htmlFor="type">Type</Label>
         <FieldSet className="w-full max-w-xs">
-          <RadioGroup defaultValue="income">
+          <RadioGroup
+            value={form.type}
+            onValueChange={(value) => handleValueChange("type", value)}
+          >
             <Field orientation="horizontal">
               <RadioGroupItem value="income" id="type-income" />
               <FieldLabel htmlFor="type-income" className="font-normal">
@@ -162,6 +179,7 @@ export default function TransactionForm({ onCancel, onSuccess }) {
         >
           Cancel
         </Button>
+
         <Button
           type="submit"
           disabled={loading}
