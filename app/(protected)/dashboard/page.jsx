@@ -1,5 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { UserButton } from "@clerk/nextjs";
 
 export default async function Page() {
   const { isAuthenticated } = await auth();
@@ -8,5 +9,10 @@ export default async function Page() {
     redirect("/sign-in");
   }
 
-  return <h1>Hello world</h1>;
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+      <h1>Hello world</h1>
+      <UserButton />
+    </div>
+  );
 }
