@@ -29,6 +29,9 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
   --color-accent-2: var(--accent-2);
+  --color-accent-2-foreground: var(--accent-2-foreground);
+  --color-accent-15: var(--accent-15);
+  --color-accent-15-foreground: var(--accent-15-foreground);
   --color-muted-foreground: var(--muted-foreground);
   --color-muted: var(--muted);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -77,6 +80,10 @@
   --accent: #acf365;
   --accent-foreground: #2c2c2e;
 
+  /* Accent */
+  --accent-15: rgb(172, 243, 101, 0.15);
+  --accent-15-foreground: #76a646;
+
   /* Accent 2 */
   --accent-2: #76a646;
   --accent-2-foreground: #2c2c2e;
@@ -92,7 +99,7 @@
   --input: #eae8ec;
   --ring: #76a646;
 
-  --radius: 0.75rem;
+  --radius: 0.5rem;
 }
 
 .dark {
