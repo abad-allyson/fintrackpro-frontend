@@ -1,6 +1,9 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
+import TransactionHeader from "./TransactionsHeader";
+import TransactionsTable from "./TransactionsTable";
+
 export const metadata = {
   title: "Transactions",
 };
@@ -11,10 +14,15 @@ export default async function Transactions() {
   if (!isAuthenticated) {
     redirect("/sign-in");
   }
+
+  // TODO:
+  // const transactions = await getTransactions();
+
   return (
-    <div className="flex justify-center items-center min-h-screen flex-col gap-4">
-      <h1 className="text-3xl font-bold">TRANSACTIONS</h1>
-      <p>Coming Soon.</p>
+    <div className="flex flex-col gap-6 py-10 px-12">
+      <TransactionHeader />
+
+      <TransactionsTable transactions={[]} />
     </div>
   );
 }

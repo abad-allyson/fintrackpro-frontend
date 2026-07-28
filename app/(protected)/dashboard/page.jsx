@@ -85,11 +85,11 @@ export default async function Page() {
         </Card>
         <Card className="p-8">
           <CardHeader className="flex flex-col items-center justify-center space-y-0">
-            <CardTitle className="font-semibold text-lg text-center">
+            <CardTitle className="font-semibold text-center">
               Quarterly Estimated Tax is locked.
             </CardTitle>
             <CardDescription className="text-primary">
-              <p className="text-sm">
+              <p className="text-xs text-center">
                 Upgrade to Premium to unlock this feature.
               </p>
             </CardDescription>
