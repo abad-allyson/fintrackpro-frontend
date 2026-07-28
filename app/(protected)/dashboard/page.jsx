@@ -1,6 +1,9 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { UserButton } from "@clerk/nextjs";
+
+export const metadata = {
+  title: "Dashboard",
+};
 
 export default async function Page() {
   const { isAuthenticated } = await auth();
@@ -10,9 +13,8 @@ export default async function Page() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <h1>Hello world</h1>
-      <UserButton />
+    <div className="flex  min-h-screen">
+      <h1>DASHBOARD</h1>
     </div>
   );
 }

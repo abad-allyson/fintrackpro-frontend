@@ -67,10 +67,10 @@
 
   /* Neutral */
   --secondary: #8d8d8f;
-  --secondary-foreground: #ffffff;
+  --secondary-foreground: #fbfbfb;
 
   /* Surface */
-  --muted: #eae8ec;
+  --muted: #efedf0;
   --muted-foreground: #8d8d8f;
 
   /* Accent */
