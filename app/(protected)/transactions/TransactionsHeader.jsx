@@ -29,12 +29,15 @@ export default function TransactionHeader() {
       </Button>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button variant="accent" size="lg" className="py-5 px-6">
-            <Plus />
-            Add Transaction
-          </Button>
-        </DialogTrigger>
+        <DialogTrigger
+          aschild="true"
+          render={
+            <Button variant="accent" size="lg" className="py-5 px-6">
+              <Plus />
+              Add Transaction
+            </Button>
+          }
+        ></DialogTrigger>
 
         <DialogContent className="sm:max-w-md p-8">
           <DialogHeader>

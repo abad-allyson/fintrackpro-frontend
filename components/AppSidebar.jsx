@@ -112,7 +112,7 @@ export function AppSidebar() {
                 <SidebarMenuItem
                   key={item.title}
                   className={cn(
-                    "px-4 py-1 rounded-md mb-2",
+                    "px-1 py-1 rounded-md mb-2",
                     isActive
                       ? "bg-primary text-primary-foreground"
                       : "text-primary hover:bg-secondary hover:text-secondary-foreground",
@@ -121,9 +121,9 @@ export function AppSidebar() {
                   <Link href={item.url}>
                     <SidebarMenuButton
                       tooltip={item.title}
-                      className="flex cursor-pointer items-center space-x-2"
+                      className="flex cursor-pointer items-center"
                     >
-                      <item.icon className="h-[22px] w-[22px]" />
+                      <item.icon />
                       <span className="font-semibold">{item.title}</span>
                     </SidebarMenuButton>
                   </Link>
