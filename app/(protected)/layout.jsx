@@ -5,7 +5,9 @@ export default function Layout({ children }) {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main className="bg-background-500 text-foreground">{children}</main>
+      <main className="bg-background-500 text-foreground flex-1">
+        {children}
+      </main>
     </SidebarProvider>
   );
 }

@@ -49,32 +49,32 @@ const data = {
     },
     {
       title: "Budgets",
-      url: "#",
+      url: "/budgets",
       icon: CircleDollarSign,
     },
     {
       title: "Tax Estimator",
-      url: "#",
+      url: "/tax-estimator",
       icon: Calculator,
     },
     {
       title: "Receipts",
-      url: "#",
+      url: "/receipts",
       icon: ReceiptText,
     },
     {
       title: "Bank Accounts",
-      url: "#",
+      url: "/bank-accounts",
       icon: Landmark,
     },
     {
       title: "Subscription",
-      url: "#",
+      url: "/subscription",
       icon: Tag,
     },
     {
       title: "Settings",
-      url: "#",
+      url: "/settings",
       icon: Settings,
     },
   ],
@@ -139,7 +139,7 @@ export function AppSidebar() {
           <UserButton />
           <div>
             <p className="text-sm font-semibold leading-none">
-              {useUser().user.firstName} {useUser().user.lastName}
+              {useUser().user?.firstName} {useUser().user?.lastName}
             </p>
           </div>
         </div>
