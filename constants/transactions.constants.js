@@ -35,14 +35,16 @@ export const months = [
   { label: "December", value: "12" },
 ];
 
-export const years = [
-  { label: "2026", value: "2026" },
-  { label: "2025", value: "2025" },
-  { label: "2024", value: "2024" },
-  { label: "2023", value: "2023" },
-  { label: "2022", value: "2022" },
-  { label: "2021", value: "2021" },
-];
+const currentYear = new Date().getFullYear();
+
+export const years = Array.from({ length: 10 }, (_, index) => {
+  const year = currentYear - index;
+
+  return {
+    label: year.toString(),
+    value: year.toString(),
+  };
+});
 
 export const categoryMap = Object.fromEntries(
   categories.map((item) => [item.value, item.label]),

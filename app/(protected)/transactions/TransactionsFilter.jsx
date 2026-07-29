@@ -18,6 +18,7 @@ import {
   months,
   years,
 } from "@/constants/transactions.constants";
+import { getSelectedLabel } from "@/lib/getSelectedLabel";
 
 export default function TransactionsFilter({ filters, setFilters }) {
   function updateFilter(name, value) {
@@ -39,7 +40,7 @@ export default function TransactionsFilter({ filters, setFilters }) {
           placeholder="Search"
           value={filters.search}
           onChange={(e) => updateFilter("search", e.target.value)}
-          className="bg-white border-outline h-full"
+          className="bg-white border-outline h-full w-md"
         />
       </div>
 
@@ -49,7 +50,9 @@ export default function TransactionsFilter({ filters, setFilters }) {
         onValueChange={(value) => updateFilter("month", value)}
       >
         <SelectTrigger className="bg-white border-outline">
-          <SelectValue placeholder="Month" />
+          <SelectValue placeholder="Month">
+            {getSelectedLabel(months, filters.month)}
+          </SelectValue>
         </SelectTrigger>
 
         <SelectContent>

@@ -97,6 +97,7 @@ export default function TransactionsClient() {
         type: "error",
         description: error.message,
       });
+      setFormOpen(false);
     } finally {
       setLoading(false);
     }
@@ -124,6 +125,7 @@ export default function TransactionsClient() {
         type: "error",
         description: "Failed to delete transaction.",
       });
+      setFormOpen(false);
     } finally {
       setLoading(false);
     }
