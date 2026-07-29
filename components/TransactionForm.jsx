@@ -79,7 +79,9 @@ export default function TransactionForm({
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Date */}
       <div className="space-y-2">
-        <Label htmlFor="date">Date</Label>
+        <Label htmlFor="date">
+          Date<span className="text-destructive">*</span>
+        </Label>
         <Input
           id="date"
           name="date"
@@ -91,7 +93,9 @@ export default function TransactionForm({
 
       {/* Description */}
       <div className="space-y-2">
-        <Label htmlFor="description">Description</Label>
+        <Label htmlFor="description">
+          Description <span className="text-destructive">*</span>
+        </Label>
         <Input
           id="description"
           name="description"
@@ -103,7 +107,9 @@ export default function TransactionForm({
 
       {/* Category */}
       <div className="space-y-2">
-        <Label htmlFor="category">Category</Label>
+        <Label htmlFor="category">
+          Category<span className="text-destructive">*</span>
+        </Label>
         <Select
           items={categories}
           value={form.category}
@@ -127,7 +133,9 @@ export default function TransactionForm({
 
       {/* Type */}
       <div className="space-y-2">
-        <Label htmlFor="type">Type</Label>
+        <Label htmlFor="type">
+          Type<span className="text-destructive">*</span>
+        </Label>
         <FieldSet className="w-full max-w-xs">
           <RadioGroup
             value={form.type}
@@ -151,7 +159,9 @@ export default function TransactionForm({
 
       {/* Amount */}
       <div className="space-y-2">
-        <Label htmlFor="amount">Amount</Label>
+        <Label htmlFor="amount">
+          Amount<span className="text-destructive">*</span>
+        </Label>
         <Input
           id="amount"
           name="amount"

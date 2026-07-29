@@ -1,4 +1,4 @@
-export async function addTransaction(data, token) {
+export async function addTransaction(form, token) {
   const API_URL = process.env.NEXT_PUBLIC_API;
 
   const response = await fetch(`${API_URL}/api/transactions`, {
@@ -7,14 +7,16 @@ export async function addTransaction(data, token) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(form),
   });
 
+  const data = await response.json();
+
   if (!response.ok) {
-    throw new Error("Failed to add transaction.");
+    throw new Error(data.error);
   }
 
-  return response.json();
+  return data;
 }
 
 export async function getAllTransactions(token, query = {}) {
@@ -45,7 +47,7 @@ export async function getAllTransactions(token, query = {}) {
   return response.json();
 }
 
-export async function updateTransaction(id, data, token) {
+export async function updateTransaction(id, form, token) {
   const API_URL = process.env.NEXT_PUBLIC_API;
 
   const response = await fetch(`${API_URL}/api/transactions/${id}`, {
@@ -54,14 +56,16 @@ export async function updateTransaction(id, data, token) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(form),
   });
 
+  const data = await response.json();
+
   if (!response.ok) {
-    throw new Error("Failed to update transaction.");
+    throw new Error(data.error);
   }
 
-  return response.json();
+  return data;
 }
 
 export async function deleteTransaction(id, token) {
@@ -75,8 +79,9 @@ export async function deleteTransaction(id, token) {
     },
   });
 
+  const data = await response.json();
   if (!response.ok) {
-    throw new Error("Failed to delete transaction.");
+    throw new Error(data.error);
   }
 
   return response.json();
