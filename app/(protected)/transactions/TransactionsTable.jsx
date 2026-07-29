@@ -57,7 +57,7 @@ export default function TransactionsTable({ transactions, onRowClick }) {
                     : "text-destructive",
                 )}
               >
-                {transaction.type === "expense" ? "-₱ " : "₱ "}
+                {transaction.type === "expense" ? "-₱" : "+₱"}
                 {transaction.amount.toLocaleString()}
               </TableCell>
             </TableRow>

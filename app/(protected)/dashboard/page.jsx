@@ -57,10 +57,10 @@ export default async function Page() {
             <div>
               <CardTitle className=" font-semibold">Total Income</CardTitle>
               <CardDescription className="text-primary">
-                <p className="text-2xl font-bold">₱10,000.00</p>
+                <p className="text-2xl font-bold">₱ XX,XXX</p>
                 <p className="flex items-center gap-1">
                   <ArrowUp className="h-4 w-4 text-accent-2" />
-                  12.5 % vs June 2026
+                  Stats sample
                 </p>
               </CardDescription>
             </div>
@@ -74,10 +74,10 @@ export default async function Page() {
             <div>
               <CardTitle className=" font-semibold">Total Expenses</CardTitle>
               <CardDescription className="text-primary">
-                <p className="text-2xl font-bold">₱10,000.00</p>
+                <p className="text-2xl font-bold">₱XX,XXX</p>
                 <p className="flex items-center gap-1">
                   <ArrowDown className="h-4 w-4 text-accent-2" />
-                  8.2 % vs June 2026
+                  Stats sample
                 </p>
               </CardDescription>
             </div>

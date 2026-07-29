@@ -207,7 +207,6 @@ export default function TransactionForm({
           type="submit"
           disabled={loading}
           className="flex-1 py-5 px-6"
-          variant="accent"
           size="lg"
         >
           {isEdit ? "Save Changes" : "Add Transaction"}
