@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/select";
 import { Field, FieldSet, FieldLabel } from "@/components/ui/field";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { categories } from "@/constants/transactions.constants";
 
 const initialForm = {
   date: "",
@@ -26,15 +27,6 @@ const initialForm = {
   type: "income",
   amount: "",
 };
-
-const categories = [
-  { label: "Income", value: "income" },
-  { label: "Software", value: "software" },
-  { label: "Travel", value: "travel" },
-  { label: "Meals", value: "meals" },
-  { label: "Utilities", value: "utilities" },
-  { label: "Others", value: "others" },
-];
 
 export default function TransactionForm({ onCancel, onSuccess }) {
   const [form, setForm] = useState(initialForm);

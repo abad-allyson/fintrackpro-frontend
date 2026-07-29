@@ -17,3 +17,31 @@ export async function addTransaction(data, token) {
 
   return response.json();
 }
+
+export async function getAllTransactions(token, query = {}) {
+  const API_URL = process.env.NEXT_PUBLIC_API;
+
+  const params = new URLSearchParams();
+
+  Object.entries(query).forEach(([key, value]) => {
+    if (value !== "" && value !== null && value !== undefined) {
+      params.append(key, value);
+    }
+  });
+
+  const response = await fetch(
+    `${API_URL}/api/transactions?${params.toString()}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch transactions.");
+  }
+
+  return response.json();
+}

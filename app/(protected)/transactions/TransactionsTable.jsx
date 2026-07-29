@@ -8,6 +8,8 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { categoryMap, typeMap } from "@/constants/transactions.constants";
+import { formatDate } from "@/lib/format";
 
 export default function TransactionsTable({ transactions }) {
   if (transactions.length === 0) {
@@ -34,9 +36,9 @@ export default function TransactionsTable({ transactions }) {
         <TableBody>
           {transactions.map((transaction, index) => (
             <TableRow key={index}>
-              <TableCell>{transaction.date}</TableCell>
+              <TableCell>{formatDate(transaction.date)}</TableCell>
               <TableCell>{transaction.description}</TableCell>
-              <TableCell> {transaction.category}</TableCell>
+              <TableCell>{categoryMap[transaction.category]}</TableCell>
               <TableCell>
                 <Badge
                   variant={
@@ -44,7 +46,7 @@ export default function TransactionsTable({ transactions }) {
                   }
                   className="py-3"
                 >
-                  {transaction.type}
+                  {typeMap[transaction.type]}
                 </Badge>
               </TableCell>
               <TableCell
