@@ -8,8 +8,13 @@ import TransactionsFilters from "./TransactionsFilter";
 import TransactionsTable from "./TransactionsTable";
 import TransactionDetailsDialog from "./TransactionDetailsDialog";
 import TransactionAddDialog from "./TransactionAddDialog";
+import ConfirmDeleteDialog from "@/components/ConfirmDeleteDialog";
+import { toast } from "@/components/ui/toast";
 
-import { getAllTransactions } from "@/services/transaction.service";
+import {
+  getAllTransactions,
+  deleteTransaction,
+} from "@/services/transaction.service";
 import { initialFilters } from "@/constants/transactions.constants";
 
 export default function TransactionsClient() {
@@ -17,6 +22,7 @@ export default function TransactionsClient() {
   const [filters, setFilters] = useState(initialFilters);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
 
   const { getToken } = useAuth();
@@ -53,6 +59,30 @@ export default function TransactionsClient() {
     setFormOpen(true);
   }
 
+  async function handleDelete() {
+    try {
+      const token = await getToken();
+
+      const result = await deleteTransaction(selectedTransaction._id, token);
+
+      toast.add({
+        type: "success",
+        description: result.message,
+      });
+      await loadTransactions();
+
+      setConfirmDeleteOpen(false);
+      setDetailsOpen(false);
+
+      setSelectedTransaction(null);
+    } catch (error) {
+      toast.add({
+        type: "error",
+        description: "Failed to delete transaction.",
+      });
+    }
+  }
+
   return (
     <div className="flex flex-col gap-6 py-10 px-12">
       <TransactionHeader onAdd={handleAdd} />
@@ -76,6 +106,17 @@ export default function TransactionsClient() {
         onOpenChange={setDetailsOpen}
         transaction={selectedTransaction}
         onEdit={handleEdit}
+        onDeleteClick={() => setConfirmDeleteOpen(true)}
+      />
+
+      <ConfirmDeleteDialog
+        open={confirmDeleteOpen}
+        onOpenChange={setConfirmDeleteOpen}
+        title="Delete Transaction"
+        itemName={selectedTransaction?.description}
+        description="This action cannot be undone."
+        onCancel={() => setConfirmDeleteOpen(false)}
+        onConfirm={handleDelete}
       />
     </div>
   );

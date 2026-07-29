@@ -63,3 +63,21 @@ export async function updateTransaction(id, data, token) {
 
   return response.json();
 }
+
+export async function deleteTransaction(id, token) {
+  const API_URL = process.env.NEXT_PUBLIC_API;
+
+  const response = await fetch(`${API_URL}/api/transactions/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to delete transaction.");
+  }
+
+  return response.json();
+}

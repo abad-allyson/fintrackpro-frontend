@@ -1,6 +1,7 @@
 import { Manrope } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "@/components/ui/toast";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -18,7 +19,10 @@ export default function RootLayout({ children }) {
     <ClerkProvider afterSignOutUrl="/log-out" afterSignInUrl="/dashboard">
       <TooltipProvider>
         <html lang="en" className={`${manrope.variable} h-full antialiased`}>
-          <body className="min-h-full flex flex-col">{children}</body>
+          <body className="min-h-full flex flex-col">
+            <main>{children}</main>
+            <Toaster />
+          </body>
         </html>
       </TooltipProvider>
     </ClerkProvider>

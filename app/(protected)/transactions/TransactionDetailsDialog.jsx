@@ -20,6 +20,7 @@ export default function TransactionDetailsDialog({
   onOpenChange,
   transaction,
   onEdit,
+  onDeleteClick,
 }) {
   if (!transaction) return null;
 
@@ -99,7 +100,14 @@ export default function TransactionDetailsDialog({
             <Pencil className="mr-1" /> Edit Transaction
           </Button>
 
-          <Button variant="destructive" className="flex-1 py-5 px-6">
+          <Button
+            variant="destructive"
+            className="flex-1 py-5 px-6"
+            onClick={() => {
+              onOpenChange(false);
+              onDeleteClick();
+            }}
+          >
             <Trash2 className="mr-1" /> Delete Transaction
           </Button>
         </div>
