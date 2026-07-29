@@ -1,24 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import { Plus } from "lucide-react";
-
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Separator } from "@/components/ui/separator";
 
 import { Button } from "@/components/ui/button";
 
-import TransactionForm from "@/components/TransactionForm";
-
-export default function TransactionHeader() {
-  const [open, setOpen] = useState(false);
-
+export default function TransactionHeader({ onAdd }) {
   return (
     <div className="flex items-center gap-2">
       <div className="flex-1">
@@ -29,31 +15,10 @@ export default function TransactionHeader() {
         Import CSV
       </Button>
 
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger
-          aschild="true"
-          render={
-            <Button variant="accent" size="lg" className="py-5 px-6">
-              <Plus />
-              Add Transaction
-            </Button>
-          }
-        ></DialogTrigger>
-
-        <DialogContent className="sm:max-w-md p-8">
-          <DialogHeader>
-            <DialogTitle className="text-xl font-bold">
-              Add Transaction
-            </DialogTitle>
-          </DialogHeader>
-          <Separator />
-
-          <TransactionForm
-            onCancel={() => setOpen(false)}
-            onSuccess={() => setOpen(false)}
-          />
-        </DialogContent>
-      </Dialog>
+      <Button variant="accent" size="lg" className="py-5 px-6" onClick={onAdd}>
+        <Plus />
+        Add Transaction
+      </Button>
     </div>
   );
 }

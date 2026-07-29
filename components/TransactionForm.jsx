@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuth } from "@clerk/nextjs";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { addTransaction } from "@/services/transaction.service";
 
 import { Button } from "@/components/ui/button";
@@ -28,10 +28,30 @@ const initialForm = {
   amount: "",
 };
 
-export default function TransactionForm({ onCancel, onSuccess }) {
-  const [form, setForm] = useState(initialForm);
+export default function TransactionForm({
+  transaction,
+  refreshTransactions,
+  onCancel,
+  onSuccess,
+}) {
+  const [form, setForm] = useState(transaction ?? initialForm);
   const [loading, setLoading] = useState(false);
   const { getToken } = useAuth();
+
+  const isEdit = !!transaction;
+
+  useEffect(() => {
+    if (!transaction) {
+      setForm(initialForm);
+      return;
+    }
+
+    setForm({
+      ...initialForm,
+      ...transaction,
+      date: transaction.date ? transaction.date.slice(0, 10) : "",
+    });
+  }, [transaction]);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -66,6 +86,7 @@ export default function TransactionForm({ onCancel, onSuccess }) {
       setForm(initialForm);
 
       onSuccess?.();
+      await refreshTransactions();
     } catch (error) {
       console.error(error);
     } finally {
@@ -179,7 +200,7 @@ export default function TransactionForm({ onCancel, onSuccess }) {
           variant="accent"
           size="lg"
         >
-          {loading ? "Saving..." : "Add Transaction"}
+          {isEdit ? "Save Changes" : "Add Transaction"}
         </Button>
       </div>
     </form>
