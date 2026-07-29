@@ -59,7 +59,7 @@ export default function TransactionDetailsDialog({
                 )}
               >
                 {transaction.type === "expense" ? "-₱ " : "+₱ "}
-                {transaction.amount}
+                {transaction.amount.toLocaleString()}
               </p>
             </div>
           </div>
@@ -87,7 +87,9 @@ export default function TransactionDetailsDialog({
 
           <div className="flex justify-between px-1">
             <p className="text-muted-foreground">Amount</p>
-            <p className="font-semibold">₱{transaction.amount}</p>
+            <p className="font-semibold">
+              ₱{transaction.amount.toLocaleString()}
+            </p>
           </div>
         </div>
 

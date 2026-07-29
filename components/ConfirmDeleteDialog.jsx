@@ -16,7 +16,7 @@ export default function ConfirmDeleteDialog({
   onConfirm,
   title,
   itemName,
-  loading = false,
+  loading,
 }) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

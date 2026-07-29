@@ -14,7 +14,8 @@ export default function TransactionAddDialog({
   open,
   onOpenChange,
   selectedTransaction,
-  refreshTransactions,
+  onSubmit,
+  loading,
 }) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -29,9 +30,10 @@ export default function TransactionAddDialog({
 
         <TransactionForm
           transaction={selectedTransaction}
-          refreshTransactions={refreshTransactions}
+          isEdit={!!selectedTransaction}
+          onSubmit={onSubmit}
           onCancel={() => onOpenChange(false)}
-          onSuccess={() => onOpenChange(false)}
+          loading={loading}
         />
       </DialogContent>
     </Dialog>

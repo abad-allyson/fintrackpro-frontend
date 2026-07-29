@@ -1,6 +1,5 @@
 "use client";
 
-import { useAuth } from "@clerk/nextjs";
 import { useState, useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -19,11 +18,6 @@ import { Field, FieldSet, FieldLabel } from "@/components/ui/field";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { categories } from "@/constants/transactions.constants";
 
-import {
-  addTransaction,
-  updateTransaction,
-} from "@/services/transaction.service";
-
 const initialForm = {
   date: "",
   description: "",
@@ -34,15 +28,12 @@ const initialForm = {
 
 export default function TransactionForm({
   transaction,
-  refreshTransactions,
+  isEdit,
+  onSubmit,
   onCancel,
-  onSuccess,
+  loading,
 }) {
   const [form, setForm] = useState(transaction ?? initialForm);
-  const [loading, setLoading] = useState(false);
-  const { getToken } = useAuth();
-
-  const isEdit = !!transaction;
 
   useEffect(() => {
     if (!transaction) {
@@ -78,30 +69,10 @@ export default function TransactionForm({
     onCancel?.();
   }
 
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
 
-    try {
-      setLoading(true);
-      const token = await getToken();
-
-      if (isEdit) {
-        await updateTransaction(transaction._id, form, token);
-      }
-
-      if (!isEdit) {
-        await addTransaction(form, token);
-      }
-
-      setForm(initialForm);
-
-      onSuccess?.();
-      await refreshTransactions();
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
+    onSubmit(form);
   }
 
   return (

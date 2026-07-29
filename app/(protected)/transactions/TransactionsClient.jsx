@@ -14,6 +14,8 @@ import { toast } from "@/components/ui/toast";
 import {
   getAllTransactions,
   deleteTransaction,
+  addTransaction,
+  updateTransaction,
 } from "@/services/transaction.service";
 import { initialFilters } from "@/constants/transactions.constants";
 
@@ -24,6 +26,7 @@ export default function TransactionsClient() {
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { getToken } = useAuth();
 
@@ -59,8 +62,49 @@ export default function TransactionsClient() {
     setFormOpen(true);
   }
 
+  async function handleSubmit(form) {
+    try {
+      setLoading(true);
+
+      const token = await getToken();
+
+      if (selectedTransaction) {
+        const result = await updateTransaction(
+          selectedTransaction._id,
+          form,
+          token,
+        );
+
+        toast.add({
+          type: "success",
+          description: result.message,
+        });
+      } else {
+        const result = await addTransaction(form, token);
+        toast.add({
+          type: "success",
+          description: result.message,
+        });
+      }
+
+      await loadTransactions();
+
+      setFormOpen(false);
+      setSelectedTransaction(null);
+    } catch (error) {
+      console.error(error);
+      toast.add({
+        type: "error",
+        description: error.message,
+      });
+    } finally {
+      setLoading(false);
+    }
+  }
+
   async function handleDelete() {
     try {
+      setLoading(true);
       const token = await getToken();
 
       const result = await deleteTransaction(selectedTransaction._id, token);
@@ -80,6 +124,8 @@ export default function TransactionsClient() {
         type: "error",
         description: "Failed to delete transaction.",
       });
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -98,7 +144,8 @@ export default function TransactionsClient() {
         open={formOpen}
         onOpenChange={setFormOpen}
         selectedTransaction={selectedTransaction}
-        refreshTransactions={loadTransactions}
+        onSubmit={handleSubmit}
+        loading={loading}
       />
 
       <TransactionDetailsDialog
@@ -117,6 +164,7 @@ export default function TransactionsClient() {
         description="This action cannot be undone."
         onCancel={() => setConfirmDeleteOpen(false)}
         onConfirm={handleDelete}
+        loading={loading}
       />
     </div>
   );
