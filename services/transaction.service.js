@@ -44,3 +44,22 @@ export async function getAllTransactions(token, query = {}) {
 
   return response.json();
 }
+
+export async function updateTransaction(id, data, token) {
+  const API_URL = process.env.NEXT_PUBLIC_API;
+
+  const response = await fetch(`${API_URL}/api/transactions/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to update transaction.");
+  }
+
+  return response.json();
+}

@@ -2,7 +2,6 @@
 
 import { useAuth } from "@clerk/nextjs";
 import { useState, useEffect } from "react";
-import { addTransaction } from "@/services/transaction.service";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,6 +18,11 @@ import {
 import { Field, FieldSet, FieldLabel } from "@/components/ui/field";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { categories } from "@/constants/transactions.constants";
+
+import {
+  addTransaction,
+  updateTransaction,
+} from "@/services/transaction.service";
 
 const initialForm = {
   date: "",
@@ -81,7 +85,13 @@ export default function TransactionForm({
       setLoading(true);
       const token = await getToken();
 
-      await addTransaction(form, token);
+      if (isEdit) {
+        await updateTransaction(transaction._id, form, token);
+      }
+
+      if (!isEdit) {
+        await addTransaction(form, token);
+      }
 
       setForm(initialForm);
 
