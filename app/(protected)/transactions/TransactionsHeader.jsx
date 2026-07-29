@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Separator } from "@/components/ui/separator";
 
 import { Button } from "@/components/ui/button";
 
@@ -45,6 +46,7 @@ export default function TransactionHeader() {
               Add Transaction
             </DialogTitle>
           </DialogHeader>
+          <Separator />
 
           <TransactionForm
             onCancel={() => setOpen(false)}

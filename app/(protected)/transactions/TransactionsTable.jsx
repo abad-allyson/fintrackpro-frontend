@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 import { categoryMap, typeMap } from "@/constants/transactions.constants";
 import { formatDate } from "@/lib/format";
 
-export default function TransactionsTable({ transactions }) {
+export default function TransactionsTable({ transactions, onRowClick }) {
   if (transactions.length === 0) {
     return (
       <div className="rounded-sm border p-10 text-center text-muted-foreground">
@@ -35,7 +35,7 @@ export default function TransactionsTable({ transactions }) {
 
         <TableBody>
           {transactions.map((transaction, index) => (
-            <TableRow key={index}>
+            <TableRow key={index} onClick={() => onRowClick(transaction)}>
               <TableCell>{formatDate(transaction.date)}</TableCell>
               <TableCell>{transaction.description}</TableCell>
               <TableCell>{categoryMap[transaction.category]}</TableCell>

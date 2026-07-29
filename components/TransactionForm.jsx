@@ -108,7 +108,7 @@ export default function TransactionForm({ onCancel, onSuccess }) {
           onValueChange={(value) => handleValueChange("category", value)}
         >
           <SelectTrigger className="w-full">
-            <SelectValue />
+            <SelectValue placeholder="Category" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
