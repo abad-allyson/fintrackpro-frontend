@@ -3,6 +3,10 @@ import { redirect } from "next/navigation";
 
 import TransactionsClient from "./TransactionsClient";
 
+export const metadata = {
+  title: "Transactions | FinTrackPro",
+};
+
 export default async function Transactions() {
   const { isAuthenticated } = await auth();
 
