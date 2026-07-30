@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { categories } from "@/constants/global.constants";
+import { categories, months } from "@/constants/global.constants";
 import { getSelectedLabel } from "@/lib/getSelectedLabel";
 
 export default function BudgetTable({ budgets, onRowClick }) {
@@ -26,6 +26,9 @@ export default function BudgetTable({ budgets, onRowClick }) {
                 <div>
                   <p className="font-semibold text-lg">
                     {getSelectedLabel(categories, budget.category)}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {getSelectedLabel(months, budget.month)} {budget.year}
                   </p>
                 </div>
 

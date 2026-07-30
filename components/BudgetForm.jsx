@@ -185,7 +185,13 @@ export default function BudgetForm({
           className="flex-1 py-5 px-6"
           size="lg"
         >
-          {isEdit ? "Save Changes" : "Add Budget"}
+          {loading
+            ? isEdit
+              ? "Saving Changes..."
+              : "Adding Budget..."
+            : isEdit
+              ? "Save Changes"
+              : "Add Budget"}
         </Button>
       </div>
     </form>

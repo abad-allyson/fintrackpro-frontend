@@ -74,7 +74,7 @@ export default function BudgetsClient() {
 
       if (selectedBudget) {
         const result = await updateBudget(selectedBudget._id, form, token);
-
+        console.log("updating...");
         toast.add({
           type: "success",
           description: result.message,
