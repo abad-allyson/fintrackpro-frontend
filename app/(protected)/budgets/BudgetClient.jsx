@@ -3,27 +3,27 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "@clerk/nextjs";
 
-import TransactionHeader from "./TransactionsHeader";
-import TransactionsFilters from "./TransactionsFilter";
-import TransactionsTable from "./TransactionsTable";
-import TransactionDetailsDialog from "./TransactionDetailsDialog";
-import TransactionAddDialog from "./TransactionAddDialog";
+import BudgetHeader from "./BudgetHeader";
+import BudgetFilters from "./BudgetFilter";
+import BudgetTable from "./BudgetTable";
+import BudgetDetailsDialog from "./BudgetDetailsDialog";
+import BudgetAddDialog from "./BudgetAddDialog";
 import ConfirmDeleteDialog from "@/components/ConfirmDeleteDialog";
 import Pagination from "./Pagination";
 import { toast } from "@/components/ui/toast";
 
 import {
-  getAllTransactions,
-  deleteTransaction,
-  addTransaction,
-  updateTransaction,
-} from "@/services/transaction.service";
-import { initialFilters } from "@/constants/transactions.constants";
+  getAllBudgets,
+  deleteBudget,
+  addBudget,
+  updateBudget,
+} from "@/services/budget.service";
+import { initialFilters } from "@/constants/budget.constants";
 
-export default function TransactionsClient() {
-  const [transactions, setTransactions] = useState([]);
+export default function BudgetsClient() {
+  const [budgets, setBudgets] = useState([]);
   const [filters, setFilters] = useState(initialFilters);
-  const [selectedTransaction, setSelectedTransaction] = useState(null);
+  const [selectedBudget, setSelectedBudget] = useState(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
@@ -34,37 +34,35 @@ export default function TransactionsClient() {
 
   const { getToken } = useAuth();
 
-  useEffect(() => {
-    loadTransactions();
-  }, [filters, page]);
-
-  async function loadTransactions(currentFilters = filters) {
+  async function loadBudgets(currentFilters = filters) {
     try {
       const token = await getToken();
 
-      const data = await getAllTransactions(token, { ...currentFilters, page });
+      const data = await getAllBudgets(token, { ...currentFilters, page });
 
-      setTransactions(data.items);
-      setTotalPages(data.totalPages);
-      setPageRange(data.pageRange);
+      setBudgets(data.items);
     } catch (error) {
       console.error(error);
     }
   }
 
-  function handleRowClick(transaction) {
-    setSelectedTransaction(transaction);
+  useEffect(() => {
+    loadBudgets();
+  }, [filters, page]);
+
+  function handleRowClick(budget) {
+    setSelectedBudget(budget);
     setDetailsOpen(true);
   }
 
-  function handleEdit(transaction) {
+  function handleEdit(budget) {
     setDetailsOpen(false);
-    setSelectedTransaction(transaction);
+    setSelectedBudget(budget);
     setFormOpen(true);
   }
 
   function handleAdd() {
-    setSelectedTransaction(null);
+    setSelectedBudget(null);
     setFormOpen(true);
   }
 
@@ -74,29 +72,25 @@ export default function TransactionsClient() {
 
       const token = await getToken();
 
-      if (selectedTransaction) {
-        const result = await updateTransaction(
-          selectedTransaction._id,
-          form,
-          token,
-        );
+      if (selectedBudget) {
+        const result = await updateBudget(selectedBudget._id, form, token);
 
         toast.add({
           type: "success",
           description: result.message,
         });
       } else {
-        const result = await addTransaction(form, token);
+        const result = await addBudget(form, token);
         toast.add({
           type: "success",
           description: result.message,
         });
       }
 
-      await loadTransactions();
+      await loadBudgets();
 
       setFormOpen(false);
-      setSelectedTransaction(null);
+      setSelectedBudget(null);
     } catch (error) {
       console.error(error);
       toast.add({
@@ -114,22 +108,22 @@ export default function TransactionsClient() {
       setLoading(true);
       const token = await getToken();
 
-      const result = await deleteTransaction(selectedTransaction._id, token);
+      const result = await deleteBudget(selectedBudget._id, token);
 
       toast.add({
         type: "success",
         description: result.message,
       });
-      await loadTransactions();
+      await loadBudgets();
 
       setConfirmDeleteOpen(false);
       setDetailsOpen(false);
 
-      setSelectedTransaction(null);
+      setSelectedBudget(null);
     } catch (error) {
       toast.add({
         type: "error",
-        description: "Failed to delete transaction.",
+        description: "Failed to delete budget.",
       });
       setFormOpen(false);
     } finally {
@@ -139,14 +133,21 @@ export default function TransactionsClient() {
 
   return (
     <div className="flex flex-col gap-6 py-10 px-12">
-      <TransactionHeader onAdd={handleAdd} />
+      <BudgetHeader onAdd={handleAdd} />
 
-      <TransactionsFilters filters={filters} setFilters={setFilters} />
-
-      <TransactionsTable
-        transactions={transactions}
-        onRowClick={handleRowClick}
+      <BudgetAddDialog
+        open={formOpen}
+        onOpenChange={setFormOpen}
+        selectedBudget={selectedBudget}
+        onSubmit={handleSubmit}
+        loading={loading}
       />
+
+      {/* <BudgetFilters filters={filters} setFilters={setFilters} />
+
+          <BudgetTable budgets={budgets} onRowClick={handleRowClick} />
+
+
 
       <Pagination
         page={page}
@@ -155,18 +156,12 @@ export default function TransactionsClient() {
         pageRange={pageRange}
       />
 
-      <TransactionAddDialog
-        open={formOpen}
-        onOpenChange={setFormOpen}
-        selectedTransaction={selectedTransaction}
-        onSubmit={handleSubmit}
-        loading={loading}
-      />
+      
 
-      <TransactionDetailsDialog
+      <BudgetDetailsDialog
         open={detailsOpen}
         onOpenChange={setDetailsOpen}
-        transaction={selectedTransaction}
+        budget={selectedBudget}
         onEdit={handleEdit}
         onDeleteClick={() => setConfirmDeleteOpen(true)}
       />
@@ -174,13 +169,13 @@ export default function TransactionsClient() {
       <ConfirmDeleteDialog
         open={confirmDeleteOpen}
         onOpenChange={setConfirmDeleteOpen}
-        title="Delete Transaction"
-        itemName={selectedTransaction?.description}
+        title="Delete Budget"
+        itemName={selectedBudget?.description}
         description="This action cannot be undone."
         onCancel={() => setConfirmDeleteOpen(false)}
         onConfirm={handleDelete}
         loading={loading}
-      />
+      /> */}
     </div>
   );
 }

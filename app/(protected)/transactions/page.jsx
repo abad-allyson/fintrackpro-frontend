@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
-import TransactionsClient from "./TransactionsClient";
+import TransactionClient from "./TransactionClient";
 
 export const metadata = {
   title: "Transactions | FinTrackPro",
@@ -14,5 +14,5 @@ export default async function Transactions() {
     redirect("/sign-in");
   }
 
-  return <TransactionsClient />;
+  return <TransactionClient />;
 }

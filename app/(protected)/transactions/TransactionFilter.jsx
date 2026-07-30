@@ -11,13 +11,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import {
-  categories,
-  types,
-  initialFilters,
-  months,
-  years,
-} from "@/constants/transactions.constants";
+import { categories, types, months, years } from "@/constants/global.constants";
+import { initialFilters } from "@/constants/transactions.constants";
 import { getSelectedLabel } from "@/lib/getSelectedLabel";
 
 export default function TransactionsFilter({ filters, setFilters }) {

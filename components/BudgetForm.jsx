@@ -14,39 +14,36 @@ import {
   SelectLabel,
   SelectItem,
 } from "@/components/ui/select";
-import { Field, FieldSet, FieldLabel } from "@/components/ui/field";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { categories } from "@/constants/global.constants";
+import { categories, months, years } from "@/constants/global.constants";
 
 const initialForm = {
-  date: "",
-  description: "",
   category: "",
-  type: "income",
-  amount: "",
+  monthlyLimit: "",
+  month: "",
+  year: "",
 };
 
-export default function TransactionForm({
-  transaction,
+export default function BudgetForm({
+  budget,
   isEdit,
   onSubmit,
   onCancel,
   loading,
 }) {
-  const [form, setForm] = useState(transaction ?? initialForm);
+  const [form, setForm] = useState(budget ?? initialForm);
 
   useEffect(() => {
-    if (!transaction) {
+    if (!budget) {
       setForm(initialForm);
       return;
     }
 
     setForm({
       ...initialForm,
-      ...transaction,
-      date: transaction.date ? transaction.date.slice(0, 10) : "",
+      ...budget,
+      date: budget.date ? budget.date.slice(0, 10) : "",
     });
-  }, [transaction]);
+  }, [budget]);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -77,34 +74,6 @@ export default function TransactionForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Date */}
-      <div className="space-y-2">
-        <Label htmlFor="date">
-          Date<span className="text-destructive">*</span>
-        </Label>
-        <Input
-          id="date"
-          name="date"
-          type="date"
-          value={form.date}
-          onChange={handleChange}
-        />
-      </div>
-
-      {/* Description */}
-      <div className="space-y-2">
-        <Label htmlFor="description">
-          Description <span className="text-destructive">*</span>
-        </Label>
-        <Input
-          id="description"
-          name="description"
-          placeholder="Eg. Salary, Rent, Groceries"
-          value={form.description}
-          onChange={handleChange}
-        />
-      </div>
-
       {/* Category */}
       <div className="space-y-2">
         <Label htmlFor="category">
@@ -131,46 +100,72 @@ export default function TransactionForm({
         </Select>
       </div>
 
-      {/* Type */}
+      {/* monthlyLimit */}
       <div className="space-y-2">
-        <Label htmlFor="type">
-          Type<span className="text-destructive">*</span>
-        </Label>
-        <FieldSet className="w-full max-w-xs">
-          <RadioGroup
-            value={form.type}
-            onValueChange={(value) => handleValueChange("type", value)}
-          >
-            <Field orientation="horizontal">
-              <RadioGroupItem value="income" id="type-income" />
-              <FieldLabel htmlFor="type-income" className="font-normal">
-                Income
-              </FieldLabel>
-            </Field>
-            <Field orientation="horizontal">
-              <RadioGroupItem value="expense" id="type-expense" />
-              <FieldLabel htmlFor="type-expense" className="font-normal">
-                Expense
-              </FieldLabel>
-            </Field>
-          </RadioGroup>
-        </FieldSet>
-      </div>
-
-      {/* Amount */}
-      <div className="space-y-2">
-        <Label htmlFor="amount">
-          Amount<span className="text-destructive">*</span>
+        <Label htmlFor="monthlyLimit">
+          Monthly Limit<span className="text-destructive">*</span>
         </Label>
         <Input
-          id="amount"
-          name="amount"
+          id="monthlyLimit"
+          name="monthlyLimit"
           type="number"
           placeholder="0.00"
           min={1}
-          value={form.amount}
+          value={form.monthlyLimit}
           onChange={handleChange}
         />
+      </div>
+
+      {/* Month */}
+      <div className="space-y-2">
+        <Label htmlFor="month">
+          Month<span className="text-destructive">*</span>
+        </Label>
+        <Select
+          items={months}
+          value={form.month}
+          onValueChange={(value) => handleValueChange("month", value)}
+        >
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Month" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Month</SelectLabel>
+              {months.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
+
+      {/* Year */}
+      <div className="space-y-2">
+        <Label htmlFor="year">
+          Year<span className="text-destructive">*</span>
+        </Label>
+        <Select
+          items={years}
+          value={form.year}
+          onValueChange={(value) => handleValueChange("year", value)}
+        >
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Year" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Year</SelectLabel>
+              {years.map((item) => (
+                <SelectItem key={item.value} value={item.value}>
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
       </div>
 
       <div className="flex gap-2 pt-2">
@@ -190,7 +185,7 @@ export default function TransactionForm({
           className="flex-1 py-5 px-6"
           size="lg"
         >
-          {isEdit ? "Save Changes" : "Add Transaction"}
+          {isEdit ? "Save Changes" : "Add Budget"}
         </Button>
       </div>
     </form>

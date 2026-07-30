@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { categoryMap, typeMap } from "@/constants/transactions.constants";
+import { categoryMap, typeMap } from "@/constants/global.constants";
 import { formatDate } from "@/lib/format";
 
 export default function TransactionsTable({ transactions, onRowClick }) {

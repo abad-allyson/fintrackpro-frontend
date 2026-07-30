@@ -1,6 +1,8 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
+import BudgetsClient from "./BudgetClient";
+
 export const metadata = {
   title: "Budgets",
 };
@@ -11,10 +13,5 @@ export default async function Budgets() {
   if (!isAuthenticated) {
     redirect("/sign-in");
   }
-  return (
-    <div className="flex justify-center items-center min-h-screen flex-col gap-4">
-      <h1 className="text-3xl font-bold">BUDGETS</h1>
-      <p>Coming Soon.</p>
-    </div>
-  );
+  return <BudgetsClient />;
 }
