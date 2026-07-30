@@ -9,6 +9,7 @@ import TransactionsTable from "./TransactionsTable";
 import TransactionDetailsDialog from "./TransactionDetailsDialog";
 import TransactionAddDialog from "./TransactionAddDialog";
 import ConfirmDeleteDialog from "@/components/ConfirmDeleteDialog";
+import Pagination from "./Pagination";
 import { toast } from "@/components/ui/toast";
 
 import {
@@ -27,20 +28,25 @@ export default function TransactionsClient() {
   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [pageRange, setPageRange] = useState("");
 
   const { getToken } = useAuth();
 
   useEffect(() => {
     loadTransactions();
-  }, [filters]);
+  }, [filters, page]);
 
   async function loadTransactions(currentFilters = filters) {
     try {
       const token = await getToken();
 
-      const data = await getAllTransactions(token, currentFilters);
+      const data = await getAllTransactions(token, { ...currentFilters, page });
 
       setTransactions(data.items);
+      setTotalPages(data.totalPages);
+      setPageRange(data.pageRange);
     } catch (error) {
       console.error(error);
     }
@@ -140,6 +146,13 @@ export default function TransactionsClient() {
       <TransactionsTable
         transactions={transactions}
         onRowClick={handleRowClick}
+      />
+
+      <Pagination
+        page={page}
+        totalPages={totalPages}
+        onPageChange={setPage}
+        pageRange={pageRange}
       />
 
       <TransactionAddDialog

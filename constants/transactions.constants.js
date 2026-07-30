@@ -9,6 +9,7 @@ export const initialFilters = {
 export const categories = [
   { label: "Income", value: "income" },
   { label: "Software", value: "software" },
+  { label: "Marketing", value: "marketing" },
   { label: "Travel", value: "travel" },
   { label: "Meals", value: "meals" },
   { label: "Utilities", value: "utilities" },

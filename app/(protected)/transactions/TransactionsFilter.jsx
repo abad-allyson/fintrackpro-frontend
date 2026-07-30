@@ -49,8 +49,8 @@ export default function TransactionsFilter({ filters, setFilters }) {
         value={filters.month}
         onValueChange={(value) => updateFilter("month", value)}
       >
-        <SelectTrigger className="bg-white border-outline">
-          <SelectValue placeholder="Month">
+        <SelectTrigger className="bg-white border-outline pl-3">
+          <SelectValue placeholder="Month" className="text-primary">
             {getSelectedLabel(months, filters.month)}
           </SelectValue>
         </SelectTrigger>
@@ -71,8 +71,8 @@ export default function TransactionsFilter({ filters, setFilters }) {
         value={filters.year}
         onValueChange={(value) => updateFilter("year", value)}
       >
-        <SelectTrigger className="bg-white border-outline">
-          <SelectValue placeholder="Year" />
+        <SelectTrigger className="bg-white border-outline pl-3">
+          <SelectValue placeholder="Year" className="text-primary" />
         </SelectTrigger>
 
         <SelectContent>
@@ -91,8 +91,8 @@ export default function TransactionsFilter({ filters, setFilters }) {
         value={filters.category}
         onValueChange={(value) => updateFilter("category", value)}
       >
-        <SelectTrigger className="bg-white border-outline">
-          <SelectValue placeholder="Category" />
+        <SelectTrigger className="bg-white border-outline pl-3">
+          <SelectValue placeholder="Category" className="text-primary" />
         </SelectTrigger>
 
         <SelectContent>
@@ -111,8 +111,8 @@ export default function TransactionsFilter({ filters, setFilters }) {
         value={filters.type}
         onValueChange={(value) => updateFilter("type", value)}
       >
-        <SelectTrigger className="bg-white border-outline">
-          <SelectValue placeholder="Type" />
+        <SelectTrigger className="bg-white border-outline pl-3">
+          <SelectValue placeholder="Type" className="text-primary " />
         </SelectTrigger>
 
         <SelectContent>
@@ -128,7 +128,7 @@ export default function TransactionsFilter({ filters, setFilters }) {
 
       <Button
         onClick={resetFilters}
-        className="bg-white border-outline text-primary p-4"
+        className="bg-white border-outline text-primary px-3"
         variant="secondary"
       >
         Reset
