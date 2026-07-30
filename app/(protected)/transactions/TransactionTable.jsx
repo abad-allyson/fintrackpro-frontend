@@ -8,7 +8,8 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { categoryMap, typeMap } from "@/constants/global.constants";
+import { getSelectedLabel } from "@/lib/getSelectedLabel";
+import { categories, types } from "@/constants/global.constants";
 import { formatDate } from "@/lib/format";
 
 export default function TransactionsTable({ transactions, onRowClick }) {
@@ -38,7 +39,9 @@ export default function TransactionsTable({ transactions, onRowClick }) {
             <TableRow key={index} onClick={() => onRowClick(transaction)}>
               <TableCell>{formatDate(transaction.date)}</TableCell>
               <TableCell>{transaction.description}</TableCell>
-              <TableCell>{categoryMap[transaction.category]}</TableCell>
+              <TableCell>
+                {getSelectedLabel(categories, transaction.category)}
+              </TableCell>
               <TableCell>
                 <Badge
                   variant={
@@ -46,7 +49,7 @@ export default function TransactionsTable({ transactions, onRowClick }) {
                   }
                   className="py-3"
                 >
-                  {typeMap[transaction.type]}
+                  {getSelectedLabel(types, transaction.type)}
                 </Badge>
               </TableCell>
               <TableCell

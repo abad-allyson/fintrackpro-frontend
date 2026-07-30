@@ -143,9 +143,21 @@ export default function BudgetsClient() {
         loading={loading}
       />
 
-      {/* <BudgetFilters filters={filters} setFilters={setFilters} />
+      <BudgetFilters filters={filters} setFilters={setFilters} />
 
-          <BudgetTable budgets={budgets} onRowClick={handleRowClick} />
+      <BudgetTable budgets={budgets} onRowClick={handleRowClick} />
+
+      <BudgetDetailsDialog
+        open={detailsOpen}
+        onOpenChange={setDetailsOpen}
+        budget={selectedBudget}
+        onEdit={handleEdit}
+        onDeleteClick={() => setConfirmDeleteOpen(true)}
+      />
+
+      {/* 
+
+          
 
 
 
@@ -158,13 +170,7 @@ export default function BudgetsClient() {
 
       
 
-      <BudgetDetailsDialog
-        open={detailsOpen}
-        onOpenChange={setDetailsOpen}
-        budget={selectedBudget}
-        onEdit={handleEdit}
-        onDeleteClick={() => setConfirmDeleteOpen(true)}
-      />
+
 
       <ConfirmDeleteDialog
         open={confirmDeleteOpen}

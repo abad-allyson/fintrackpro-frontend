@@ -11,11 +11,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { categories, types, months, years } from "@/constants/global.constants";
-import { initialFilters } from "@/constants/transactions.constants";
+import { categories, months, years } from "@/constants/global.constants";
 import { getSelectedLabel } from "@/lib/getSelectedLabel";
+import { initialFilters } from "@/constants/budget.constants";
 
-export default function TransactionsFilter({ filters, setFilters }) {
+export default function BudgetsFilter({ filters, setFilters }) {
   function updateFilter(name, value) {
     setFilters((prev) => ({
       ...prev,
@@ -95,28 +95,6 @@ export default function TransactionsFilter({ filters, setFilters }) {
         <SelectContent>
           <SelectGroup>
             {categories.map((item) => (
-              <SelectItem key={item.value} value={item.value}>
-                {item.label}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-
-      {/* Type */}
-      <Select
-        value={filters.type}
-        onValueChange={(value) => updateFilter("type", value)}
-      >
-        <SelectTrigger className="bg-white border-outline pl-3">
-          <SelectValue placeholder="Type" className="text-primary ">
-            {getSelectedLabel(types, filters.type)}
-          </SelectValue>
-        </SelectTrigger>
-
-        <SelectContent>
-          <SelectGroup>
-            {types.map((item) => (
               <SelectItem key={item.value} value={item.value}>
                 {item.label}
               </SelectItem>

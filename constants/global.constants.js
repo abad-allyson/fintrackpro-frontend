@@ -8,18 +8,10 @@ export const categories = [
   { label: "Others", value: "others" },
 ];
 
-export const categoryMap = Object.fromEntries(
-  categories.map((item) => [item.value, item.label]),
-);
-
 export const types = [
   { label: "Income", value: "income" },
   { label: "Expense", value: "expense" },
 ];
-
-export const typeMap = Object.fromEntries(
-  types.map((item) => [item.value, item.label]),
-);
 
 export const months = [
   { label: "January", value: 1 },

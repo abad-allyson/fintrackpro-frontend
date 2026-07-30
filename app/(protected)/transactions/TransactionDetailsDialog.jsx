@@ -11,7 +11,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Pencil, Trash2 } from "lucide-react";
 
-import { categoryMap, typeMap } from "@/constants/transactions.constants";
+import { getSelectedLabel } from "@/lib/getSelectedLabel";
+import { categories, types } from "@/constants/global.constants";
 import { formatDate } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
@@ -77,12 +78,16 @@ export default function TransactionDetailsDialog({
 
           <div className="flex justify-between px-1">
             <p className="text-muted-foreground">Category</p>
-            <p className="font-semibold">{categoryMap[transaction.category]}</p>
+            <p className="font-semibold">
+              {getSelectedLabel(categories, transaction.category)}
+            </p>
           </div>
 
           <div className="flex justify-between px-1">
             <p className="text-muted-foreground">Type</p>
-            <p className="font-semibold">{typeMap[transaction.type]}</p>
+            <p className="font-semibold">
+              {getSelectedLabel(types, transaction.type)}
+            </p>
           </div>
 
           <div className="flex justify-between px-1">
