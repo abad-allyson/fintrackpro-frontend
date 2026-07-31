@@ -15,15 +15,18 @@ export default function DashboardClient() {
   const { getToken, isLoaded, isSignedIn } = useAuth();
   const [currentUser, setCurrentUser] = useState({
     firstName: "",
-    totalIncome: 0,
-    totalExpense: 0,
-    netIncome: 0,
+    email: "",
+    firstName: "",
+    lastName: "",
   });
   const [summary, setSummary] = useState({
     totalIncome: 0,
     totalExpense: 0,
     netIncome: 0,
   });
+
+  const currentMonth = getSelectedLabel(months, getCurrentMonth());
+  const currentYear = getCurrentYear();
 
   async function loadCurrentUser() {
     try {
@@ -64,8 +67,8 @@ export default function DashboardClient() {
             Welcome back, {currentUser.firstName}!
           </h1>
           <p>
-            Here's an overview of your finances this{" "}
-            {getSelectedLabel(months, getCurrentMonth())} {getCurrentYear()}.
+            Here's an overview of your finances this {currentMonth}{" "}
+            {currentYear}.
           </p>
         </div>
         <Button size="lg" className="py-5 px-6">

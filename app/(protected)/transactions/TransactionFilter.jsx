@@ -24,6 +24,10 @@ const initialFilters = {
 };
 
 export default function TransactionsFilter({ filters, setFilters }) {
+  const currentMonth = getSelectedLabel(months, getCurrentMonth());
+  const category = getSelectedLabel(categories, filters.category);
+  const type = getSelectedLabel(types, filters.type);
+
   function updateFilter(name, value) {
     setFilters((prev) => ({
       ...prev,
@@ -54,7 +58,7 @@ export default function TransactionsFilter({ filters, setFilters }) {
       >
         <SelectTrigger className="bg-white border-outline pl-3">
           <SelectValue placeholder="Month" className="text-primary">
-            {getSelectedLabel(months, filters.month)}
+            {currentMonth}
           </SelectValue>
         </SelectTrigger>
 
@@ -96,7 +100,7 @@ export default function TransactionsFilter({ filters, setFilters }) {
       >
         <SelectTrigger className="bg-white border-outline pl-3">
           <SelectValue placeholder="Category" className="text-primary">
-            {getSelectedLabel(categories, filters.category)}
+            {category}
           </SelectValue>
         </SelectTrigger>
 
@@ -118,7 +122,7 @@ export default function TransactionsFilter({ filters, setFilters }) {
       >
         <SelectTrigger className="bg-white border-outline pl-3">
           <SelectValue placeholder="Type" className="text-primary ">
-            {getSelectedLabel(types, filters.type)}
+            {type}
           </SelectValue>
         </SelectTrigger>
 

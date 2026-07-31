@@ -10,7 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Pencil, Trash2 } from "lucide-react";
 
-import { categories, months } from "@/constants/global.constants";
+import { categories } from "@/constants/global.constants";
 import { getSelectedLabel } from "@/lib/getSelectedLabel";
 
 export default function BudgetDetailsDialog({
@@ -21,6 +21,7 @@ export default function BudgetDetailsDialog({
   onDeleteClick,
 }) {
   if (!budget) return null;
+  const category = getSelectedLabel(categories, budget.category);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -35,9 +36,7 @@ export default function BudgetDetailsDialog({
         <div className="space-y-4 px-1">
           <div className="flex flex-row justify-between items-center">
             <div className="space-y-1">
-              <p className="text-lg font-bold">
-                {getSelectedLabel(categories, budget.category)}
-              </p>
+              <p className="text-lg font-bold">{category}</p>
             </div>
             <div>
               <p className="text-lg font-bold">
@@ -49,9 +48,7 @@ export default function BudgetDetailsDialog({
 
           <div className="flex justify-between px-1">
             <p className="text-muted-foreground">Category</p>
-            <p className="font-semibold">
-              {getSelectedLabel(categories, budget.category)}
-            </p>
+            <p className="font-semibold">{category}</p>
           </div>
 
           <div className="flex justify-between px-1">

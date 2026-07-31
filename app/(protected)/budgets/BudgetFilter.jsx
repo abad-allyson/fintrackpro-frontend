@@ -21,6 +21,9 @@ const initialFilters = {
 };
 
 export default function BudgetsFilter({ filters, setFilters }) {
+  const currentMonth = getSelectedLabel(months, getCurrentMonth());
+  const category = getSelectedLabel(categories, filters.category);
+
   function updateFilter(name, value) {
     setFilters((prev) => ({
       ...prev,
@@ -51,7 +54,7 @@ export default function BudgetsFilter({ filters, setFilters }) {
       >
         <SelectTrigger className="bg-white border-outline pl-3">
           <SelectValue placeholder="Month" className="text-primary">
-            {getSelectedLabel(months, filters.month)}
+            {currentMonth}
           </SelectValue>
         </SelectTrigger>
 
@@ -73,7 +76,7 @@ export default function BudgetsFilter({ filters, setFilters }) {
       >
         <SelectTrigger className="bg-white border-outline pl-3">
           <SelectValue placeholder="Category" className="text-primary">
-            {getSelectedLabel(categories, filters.category)}
+            {category}
           </SelectValue>
         </SelectTrigger>
 
