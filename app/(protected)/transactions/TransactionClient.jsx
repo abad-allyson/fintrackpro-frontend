@@ -41,11 +41,7 @@ export default function TransactionsClient() {
 
   const { getToken } = useAuth();
 
-  useEffect(() => {
-    loadTransactions();
-  }, [filters, page]);
-
-  async function loadTransactions(currentFilters = filters) {
+  async function getTransactions(currentFilters = filters) {
     try {
       const token = await getToken();
 
@@ -58,6 +54,10 @@ export default function TransactionsClient() {
       console.error(error);
     }
   }
+
+  useEffect(() => {
+    getTransactions();
+  }, [filters, page]);
 
   function handleRowClick(transaction) {
     setSelectedTransaction(transaction);
@@ -100,7 +100,7 @@ export default function TransactionsClient() {
         });
       }
 
-      await loadTransactions();
+      await getTransactions();
 
       setFormOpen(false);
       setSelectedTransaction(null);
@@ -127,7 +127,7 @@ export default function TransactionsClient() {
         type: "success",
         description: result.message,
       });
-      await loadTransactions();
+      await getTransactions();
 
       setConfirmDeleteOpen(false);
       setDetailsOpen(false);

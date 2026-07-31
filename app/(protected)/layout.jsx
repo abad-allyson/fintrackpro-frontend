@@ -17,7 +17,6 @@ export default function Layout({ children }) {
       const response = await getCurrentUser(token);
 
       setCurrentUser(response.data);
-      console.log(currentUser);
     } catch (error) {
       console.error(error);
     }
