@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import BudgetsClient from "./BudgetClient";
 
 export const metadata = {
-  title: "Budgets",
+  title: "Budgets | FinTrackPro",
 };
 
 export default async function Budgets() {

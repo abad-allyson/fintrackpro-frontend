@@ -11,9 +11,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { categories, months, years } from "@/constants/global.constants";
+import { categories, months } from "@/constants/global.constants";
 import { getSelectedLabel } from "@/lib/getSelectedLabel";
-import { initialFilters } from "@/constants/budget.constants";
+import { getCurrentMonth } from "@/lib/getCurrentDate";
+
+const initialFilters = {
+  category: "",
+  month: getCurrentMonth(),
+};
 
 export default function BudgetsFilter({ filters, setFilters }) {
   function updateFilter(name, value) {
@@ -53,26 +58,6 @@ export default function BudgetsFilter({ filters, setFilters }) {
         <SelectContent>
           <SelectGroup>
             {months.map((item) => (
-              <SelectItem key={item.value} value={item.value}>
-                {item.label}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-
-      {/* Year */}
-      <Select
-        value={filters.year}
-        onValueChange={(value) => updateFilter("year", value)}
-      >
-        <SelectTrigger className="bg-white border-outline pl-3">
-          <SelectValue placeholder="Year" className="text-primary" />
-        </SelectTrigger>
-
-        <SelectContent>
-          <SelectGroup>
-            {years.map((item) => (
               <SelectItem key={item.value} value={item.value}>
                 {item.label}
               </SelectItem>

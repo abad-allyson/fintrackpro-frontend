@@ -20,7 +20,7 @@ export default function BudgetTable({ budgets, onRowClick }) {
             onClick={() => onRowClick(budget)}
             className="cursor-pointer hover:bg-muted/40 transition-colors px-2"
           >
-            <CardContent className="py-2">
+            <CardContent className="py-1">
               <div className="grid grid-cols-[180px_140px_140px_140px_1fr_60px] items-center gap-6">
                 {/* Category */}
                 <div>

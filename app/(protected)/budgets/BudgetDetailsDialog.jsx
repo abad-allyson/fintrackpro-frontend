@@ -38,7 +38,6 @@ export default function BudgetDetailsDialog({
               <p className="text-lg font-bold">
                 {getSelectedLabel(categories, budget.category)}
               </p>
-              <p>{getSelectedLabel(months, 8)}</p>
             </div>
             <div>
               <p className="text-lg font-bold">

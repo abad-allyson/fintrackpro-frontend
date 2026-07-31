@@ -5,7 +5,6 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { UserButton } from "@clerk/nextjs";
-import { useUser } from "@clerk/nextjs";
 
 import {
   Grid2X2,
@@ -80,12 +79,12 @@ const data = {
   ],
 };
 
-export function AppSidebar() {
+export function AppSidebar({ currentUser }) {
   const pathname = usePathname();
 
   return (
     <Sidebar className="p-5 bg-muted">
-      <SidebarHeader className="px-4 py-5">
+      <SidebarHeader className="px-4 ">
         <Link href="/dashboard" className="flex items-center gap-3">
           <Image
             src="/fintrackpro-logo.png"
@@ -135,12 +134,13 @@ export function AppSidebar() {
       </SidebarContent>
       <SidebarFooter>
         <Separator className="my-4 " />
-        <div className="flex items-center gap-2 py-2">
+        <div className="flex items-center gap-4 py-2">
           <UserButton />
           <div>
             <p className="text-sm font-semibold leading-none">
-              {useUser().user?.firstName} {useUser().user?.lastName}
+              {currentUser?.firstName} {currentUser?.lastName}
             </p>
+            <p className="text-xs capitalize">{currentUser?.plan} Plan</p>
           </div>
         </div>
       </SidebarFooter>

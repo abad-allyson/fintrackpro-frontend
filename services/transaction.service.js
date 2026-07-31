@@ -79,10 +79,17 @@ export async function deleteTransaction(id, token) {
     },
   });
 
-  const data = await response.json();
-  if (!response.ok) {
-    throw new Error(data.error);
+  let data = {};
+
+  try {
+    data = await response.json();
+  } catch {
+    data = {};
   }
 
-  return response.json();
+  if (!response.ok) {
+    throw new Error(data.error || data.message || "Failed to delete transaction.");
+  }
+
+  return data;
 }

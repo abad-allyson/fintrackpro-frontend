@@ -12,8 +12,15 @@ import {
 } from "@/components/ui/select";
 
 import { categories, types, months, years } from "@/constants/global.constants";
-import { initialFilters } from "@/constants/transactions.constants";
 import { getSelectedLabel } from "@/lib/getSelectedLabel";
+
+const initialFilters = {
+  search: "",
+  month: "",
+  year: "",
+  category: "",
+  type: "",
+};
 
 export default function TransactionsFilter({ filters, setFilters }) {
   function updateFilter(name, value) {

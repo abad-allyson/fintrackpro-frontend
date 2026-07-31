@@ -18,7 +18,12 @@ import {
   addBudget,
   updateBudget,
 } from "@/services/budget.service";
-import { initialFilters } from "@/constants/budget.constants";
+import { getCurrentMonth } from "@/lib/getCurrentDate";
+
+const initialFilters = {
+  category: "",
+  month: getCurrentMonth(),
+};
 
 export default function BudgetsClient() {
   const [budgets, setBudgets] = useState([]);
@@ -123,9 +128,9 @@ export default function BudgetsClient() {
     } catch (error) {
       toast.add({
         type: "error",
-        description: "Failed to delete budget.",
+        description: error.message || "Failed to delete budget.",
       });
-      setFormOpen(false);
+      setConfirmDeleteOpen(false);
     } finally {
       setLoading(false);
     }
@@ -155,12 +160,6 @@ export default function BudgetsClient() {
         onDeleteClick={() => setConfirmDeleteOpen(true)}
       />
 
-      {/* 
-
-          
-
-
-
       <Pagination
         page={page}
         totalPages={totalPages}
@@ -168,20 +167,16 @@ export default function BudgetsClient() {
         pageRange={pageRange}
       />
 
-      
-
-
-
       <ConfirmDeleteDialog
         open={confirmDeleteOpen}
         onOpenChange={setConfirmDeleteOpen}
         title="Delete Budget"
-        itemName={selectedBudget?.description}
+        itemName={`budget for ${selectedBudget?.category}`}
         description="This action cannot be undone."
         onCancel={() => setConfirmDeleteOpen(false)}
         onConfirm={handleDelete}
         loading={loading}
-      /> */}
+      />
     </div>
   );
 }

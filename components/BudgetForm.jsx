@@ -19,8 +19,6 @@ import { categories, months, years } from "@/constants/global.constants";
 const initialForm = {
   category: "",
   monthlyLimit: "",
-  month: "",
-  year: "",
 };
 
 export default function BudgetForm({
@@ -114,58 +112,6 @@ export default function BudgetForm({
           value={form.monthlyLimit}
           onChange={handleChange}
         />
-      </div>
-
-      {/* Month */}
-      <div className="space-y-2">
-        <Label htmlFor="month">
-          Month<span className="text-destructive">*</span>
-        </Label>
-        <Select
-          items={months}
-          value={form.month}
-          onValueChange={(value) => handleValueChange("month", value)}
-        >
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Month" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Month</SelectLabel>
-              {months.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Year */}
-      <div className="space-y-2">
-        <Label htmlFor="year">
-          Year<span className="text-destructive">*</span>
-        </Label>
-        <Select
-          items={years}
-          value={form.year}
-          onValueChange={(value) => handleValueChange("year", value)}
-        >
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="Year" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Year</SelectLabel>
-              {years.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
       </div>
 
       <div className="flex gap-2 pt-2">

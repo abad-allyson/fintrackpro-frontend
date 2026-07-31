@@ -18,7 +18,14 @@ import {
   addTransaction,
   updateTransaction,
 } from "@/services/transaction.service";
-import { initialFilters } from "@/constants/transactions.constants";
+
+const initialFilters = {
+  search: "",
+  month: "",
+  year: "",
+  category: "",
+  type: "",
+};
 
 export default function TransactionsClient() {
   const [transactions, setTransactions] = useState([]);
@@ -129,9 +136,9 @@ export default function TransactionsClient() {
     } catch (error) {
       toast.add({
         type: "error",
-        description: "Failed to delete transaction.",
+        description: error.message || "Failed to delete transaction.",
       });
-      setFormOpen(false);
+      setConfirmDeleteOpen(false);
     } finally {
       setLoading(false);
     }
