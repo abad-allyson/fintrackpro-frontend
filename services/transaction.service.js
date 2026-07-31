@@ -40,11 +40,13 @@ export async function getAllTransactions(token, query = {}) {
     },
   );
 
+  const data = await response.json();
+
   if (!response.ok) {
-    throw new Error("Failed to fetch transactions.");
+    throw new Error(data.error);
   }
 
-  return response.json();
+  return data;
 }
 
 export async function updateTransaction(id, form, token) {
@@ -79,16 +81,10 @@ export async function deleteTransaction(id, token) {
     },
   });
 
-  let data = {};
-
-  try {
-    data = await response.json();
-  } catch {
-    data = {};
-  }
+  const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.error || data.message || "Failed to delete transaction.");
+    throw new Error(data.error);
   }
 
   return data;

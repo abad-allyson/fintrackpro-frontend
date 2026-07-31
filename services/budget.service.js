@@ -76,16 +76,29 @@ export async function deleteBudget(id, token) {
     },
   });
 
-  let data = {};
-
-  try {
-    data = await response.json();
-  } catch {
-    data = {};
-  }
+  const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.error || data.message || "Failed to delete budget.");
+    throw new Error(data.error);
+  }
+
+  return data;
+}
+
+export async function getBudgetSummary(token) {
+  const API_URL = process.env.NEXT_PUBLIC_API;
+
+  const response = await fetch(`${API_URL}/api/budgets/summary`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.error);
   }
 
   return data;

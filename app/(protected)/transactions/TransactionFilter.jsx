@@ -13,11 +13,12 @@ import {
 
 import { categories, types, months, years } from "@/constants/global.constants";
 import { getSelectedLabel } from "@/lib/getSelectedLabel";
+import { getCurrentMonth, getCurrentYear } from "@/lib/getCurrentDate";
 
 const initialFilters = {
   search: "",
-  month: "",
-  year: "",
+  month: getCurrentMonth(),
+  year: getCurrentYear(),
   category: "",
   type: "",
 };

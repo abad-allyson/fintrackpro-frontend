@@ -7,15 +7,23 @@ import { useState, useEffect } from "react";
 import { getCurrentUser } from "@/services/user.service";
 import { getDashboardSummary } from "@/services/dashboard.service";
 import DashboardSummary from "./DashboardSummary";
+import { getCurrentMonth, getCurrentYear } from "@/lib/getCurrentDate";
+import { getSelectedLabel } from "@/lib/getSelectedLabel";
+import { months } from "@/constants/global.constants";
 
 export default function DashboardClient() {
   const { getToken, isLoaded, isSignedIn } = useAuth();
   const [currentUser, setCurrentUser] = useState({
+    firstName: "",
     totalIncome: 0,
     totalExpense: 0,
     netIncome: 0,
   });
-  const [summary, setSummary] = useState([]);
+  const [summary, setSummary] = useState({
+    totalIncome: 0,
+    totalExpense: 0,
+    netIncome: 0,
+  });
 
   async function loadCurrentUser() {
     try {
@@ -34,6 +42,7 @@ export default function DashboardClient() {
       const token = await getToken();
       const response = await getDashboardSummary(token);
       setSummary(response);
+      console.log(response);
     } catch (error) {
       console.error(error);
     }
@@ -54,7 +63,10 @@ export default function DashboardClient() {
           <h1 className="text-2xl font-bold ">
             Welcome back, {currentUser.firstName}!
           </h1>
-          <p>Here's an overview of your finances this month</p>
+          <p>
+            Here's an overview of your finances this{" "}
+            {getSelectedLabel(months, getCurrentMonth())} {getCurrentYear()}.
+          </p>
         </div>
         <Button size="lg" className="py-5 px-6">
           <Plus />

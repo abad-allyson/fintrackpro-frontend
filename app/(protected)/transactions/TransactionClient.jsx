@@ -18,11 +18,12 @@ import {
   addTransaction,
   updateTransaction,
 } from "@/services/transaction.service";
+import { getCurrentMonth, getCurrentYear } from "@/lib/getCurrentDate";
 
 const initialFilters = {
   search: "",
-  month: "",
-  year: "",
+  month: getCurrentMonth(),
+  year: getCurrentYear(),
   category: "",
   type: "",
 };

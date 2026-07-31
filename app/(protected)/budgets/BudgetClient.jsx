@@ -9,6 +9,7 @@ import BudgetTable from "./BudgetTable";
 import BudgetDetailsDialog from "./BudgetDetailsDialog";
 import BudgetAddDialog from "./BudgetAddDialog";
 import ConfirmDeleteDialog from "@/components/ConfirmDeleteDialog";
+import BudgetSummary from "./BudgetSummary";
 import Pagination from "./Pagination";
 import { toast } from "@/components/ui/toast";
 
@@ -17,6 +18,7 @@ import {
   deleteBudget,
   addBudget,
   updateBudget,
+  getBudgetSummary,
 } from "@/services/budget.service";
 import { getCurrentMonth } from "@/lib/getCurrentDate";
 
@@ -27,6 +29,11 @@ const initialFilters = {
 
 export default function BudgetsClient() {
   const [budgets, setBudgets] = useState([]);
+  const [budgetsSummary, setBudgetsSummary] = useState({
+    totalBudget: 0,
+    totalSpent: 0,
+    remainingBudget: 0,
+  });
   const [filters, setFilters] = useState(initialFilters);
   const [selectedBudget, setSelectedBudget] = useState(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
@@ -39,7 +46,7 @@ export default function BudgetsClient() {
 
   const { getToken } = useAuth();
 
-  async function loadBudgets(currentFilters = filters) {
+  async function getBudgets(currentFilters = filters) {
     try {
       const token = await getToken();
 
@@ -51,8 +58,22 @@ export default function BudgetsClient() {
     }
   }
 
+  async function getBudgetsSummary() {
+    try {
+      const token = await getToken();
+
+      const data = await getBudgetSummary(token);
+
+      setBudgetsSummary(data);
+      console.log("SUMMARY", data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   useEffect(() => {
-    loadBudgets();
+    getBudgets();
+    getBudgetsSummary();
   }, [filters, page]);
 
   function handleRowClick(budget) {
@@ -92,7 +113,7 @@ export default function BudgetsClient() {
         });
       }
 
-      await loadBudgets();
+      await getBudgets();
 
       setFormOpen(false);
       setSelectedBudget(null);
@@ -119,7 +140,7 @@ export default function BudgetsClient() {
         type: "success",
         description: result.message,
       });
-      await loadBudgets();
+      await getBudgets();
 
       setConfirmDeleteOpen(false);
       setDetailsOpen(false);
@@ -138,7 +159,8 @@ export default function BudgetsClient() {
 
   return (
     <div className="flex flex-col gap-6 py-10 px-12">
-      <BudgetHeader onAdd={handleAdd} />
+      <BudgetHeader onAdd={handleAdd} date={filters} />
+      <BudgetSummary summary={budgetsSummary} />
 
       <BudgetAddDialog
         open={formOpen}
