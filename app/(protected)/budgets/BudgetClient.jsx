@@ -114,7 +114,7 @@ export default function BudgetsClient() {
       }
 
       await getBudgets();
-
+      await getBudgetsSummary();
       setFormOpen(false);
       setSelectedBudget(null);
     } catch (error) {
@@ -140,7 +140,9 @@ export default function BudgetsClient() {
         type: "success",
         description: result.message,
       });
+
       await getBudgets();
+      await getBudgetsSummary();
 
       setConfirmDeleteOpen(false);
       setDetailsOpen(false);
