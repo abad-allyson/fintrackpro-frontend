@@ -47,33 +47,28 @@ export default function BudgetsClient() {
 
   const { getToken } = useAuth();
 
-  async function getBudgets(currentFilters = filters) {
+  async function getBudgetsData(currentFilters = filters) {
     try {
       const token = await getToken();
 
-      const data = await getAllBudgets(token, { ...currentFilters, page });
+      const allBudgets = await getAllBudgets(token, {
+        ...currentFilters,
+        page,
+      });
+      const budgetsSummary = await getBudgetSummary(token, {
+        ...currentFilters,
+        page,
+      });
 
-      setBudgets(data.items);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  async function getBudgetsSummary(currentFilters = filters) {
-    try {
-      const token = await getToken();
-
-      const data = await getBudgetSummary(token, { ...currentFilters, page });
-
-      setBudgetsSummary(data);
+      setBudgets(allBudgets.items);
+      setBudgetsSummary(budgetsSummary);
     } catch (error) {
       console.error(error);
     }
   }
 
   useEffect(() => {
-    getBudgets();
-    getBudgetsSummary();
+    getBudgetsData();
   }, [filters, page]);
 
   function handleRowClick(budget) {
@@ -113,8 +108,7 @@ export default function BudgetsClient() {
         });
       }
 
-      await getBudgets();
-      await getBudgetsSummary();
+      await getBudgetsData();
       setFormOpen(false);
       setSelectedBudget(null);
     } catch (error) {
@@ -141,8 +135,7 @@ export default function BudgetsClient() {
         description: result.message,
       });
 
-      await getBudgets();
-      await getBudgetsSummary();
+      await getBudgetsData();
 
       setConfirmDeleteOpen(false);
       setDetailsOpen(false);

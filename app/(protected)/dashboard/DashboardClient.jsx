@@ -28,24 +28,14 @@ export default function DashboardClient() {
   const currentMonth = getSelectedLabel(months, getCurrentMonth());
   const currentYear = getCurrentYear();
 
-  async function loadCurrentUser() {
+  async function loadUserAndData() {
     try {
       const token = await getToken();
 
-      const response = await getCurrentUser(token);
-
-      setCurrentUser(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  async function getMonthlySummary() {
-    try {
-      const token = await getToken();
-      const response = await getDashboardSummary(token);
-      setSummary(response);
-      console.log(response);
+      const user = await getCurrentUser(token);
+      const dashboardSummary = await getDashboardSummary(token);
+      setSummary(dashboardSummary);
+      setCurrentUser(user.data);
     } catch (error) {
       console.error(error);
     }
@@ -53,9 +43,7 @@ export default function DashboardClient() {
 
   useEffect(() => {
     if (!isLoaded || !isSignedIn) return;
-    loadCurrentUser();
-
-    getMonthlySummary();
+    loadUserAndData();
   }, [isLoaded, isSignedIn]);
 
   return (
