@@ -31,7 +31,11 @@ export default function BudgetSummary({ summary = {} }) {
           <div className="space-y-1">
             <CardTitle className="font-semibold">Remaining Budget</CardTitle>
             <CardDescription className="text-primary">
-              <p className="text-2xl font-bold text-accent-2">
+              <p
+                className={`text-2xl font-bold text-accent-2 ${
+                  summary.remainingBudget < 0 ? "text-red-600" : "accent-2"
+                }`}
+              >
                 ₱ {summary?.remainingBudget.toLocaleString() ?? "0"}
               </p>
             </CardDescription>

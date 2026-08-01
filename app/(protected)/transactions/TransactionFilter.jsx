@@ -24,7 +24,8 @@ const initialFilters = {
 };
 
 export default function TransactionsFilter({ filters, setFilters }) {
-  const currentMonth = getSelectedLabel(months, getCurrentMonth());
+  const selectedMonth = getSelectedLabel(months, filters.month);
+  const selectedYear = getSelectedLabel(years, filters.year);
   const category = getSelectedLabel(categories, filters.category);
   const type = getSelectedLabel(types, filters.type);
 
@@ -58,7 +59,7 @@ export default function TransactionsFilter({ filters, setFilters }) {
       >
         <SelectTrigger className="bg-white border-outline pl-3">
           <SelectValue placeholder="Month" className="text-primary">
-            {currentMonth}
+            {selectedMonth}
           </SelectValue>
         </SelectTrigger>
 
@@ -79,7 +80,9 @@ export default function TransactionsFilter({ filters, setFilters }) {
         onValueChange={(value) => updateFilter("year", value)}
       >
         <SelectTrigger className="bg-white border-outline pl-3">
-          <SelectValue placeholder="Year" className="text-primary" />
+          <SelectValue placeholder="Year" className="text-primary">
+            {selectedYear}
+          </SelectValue>
         </SelectTrigger>
 
         <SelectContent>

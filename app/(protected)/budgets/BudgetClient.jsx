@@ -20,11 +20,12 @@ import {
   updateBudget,
   getBudgetSummary,
 } from "@/services/budget.service";
-import { getCurrentMonth } from "@/lib/getCurrentDate";
+import { getCurrentMonth, getCurrentYear } from "@/lib/getCurrentDate";
 
 const initialFilters = {
   category: "",
   month: getCurrentMonth(),
+  year: getCurrentYear(),
 };
 
 export default function BudgetsClient() {
@@ -58,14 +59,13 @@ export default function BudgetsClient() {
     }
   }
 
-  async function getBudgetsSummary() {
+  async function getBudgetsSummary(currentFilters = filters) {
     try {
       const token = await getToken();
 
-      const data = await getBudgetSummary(token);
+      const data = await getBudgetSummary(token, { ...currentFilters, page });
 
       setBudgetsSummary(data);
-      console.log("SUMMARY", data);
     } catch (error) {
       console.error(error);
     }

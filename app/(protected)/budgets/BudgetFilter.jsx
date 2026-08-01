@@ -13,16 +13,17 @@ import {
 
 import { categories, months } from "@/constants/global.constants";
 import { getSelectedLabel } from "@/lib/getSelectedLabel";
-import { getCurrentMonth } from "@/lib/getCurrentDate";
+import { getCurrentMonth, getCurrentYear } from "@/lib/getCurrentDate";
 
 const initialFilters = {
   category: "",
+  year: getCurrentYear(),
   month: getCurrentMonth(),
 };
 
 export default function BudgetsFilter({ filters, setFilters }) {
-  const currentMonth = getSelectedLabel(months, getCurrentMonth());
   const category = getSelectedLabel(categories, filters.category);
+  const selectedMonth = getSelectedLabel(months, filters.month);
 
   function updateFilter(name, value) {
     setFilters((prev) => ({
@@ -54,7 +55,7 @@ export default function BudgetsFilter({ filters, setFilters }) {
       >
         <SelectTrigger className="bg-white border-outline pl-3">
           <SelectValue placeholder="Month" className="text-primary">
-            {currentMonth}
+            {selectedMonth}
           </SelectValue>
         </SelectTrigger>
 

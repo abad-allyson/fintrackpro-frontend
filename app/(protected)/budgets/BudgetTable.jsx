@@ -53,7 +53,7 @@ export default function BudgetTable({ budgets, onRowClick }) {
                   <p className="text-xs text-muted-foreground">Remaining</p>
                   <p
                     className={`font-semibold ${
-                      budget.remaining < 0 ? "text-red-600" : "text-green-600"
+                      budget.remaining < 0 ? "text-red-600" : "text-accent-2"
                     }`}
                   >
                     ₱{budget.remaining?.toLocaleString()}

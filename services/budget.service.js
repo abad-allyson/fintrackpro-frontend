@@ -37,11 +37,13 @@ export async function getAllBudgets(token, query = {}) {
     },
   });
 
+  const data = await response.json();
+
   if (!response.ok) {
-    throw new Error("Failed to fetch budgets.");
+    throw new Error(data.error);
   }
 
-  return response.json();
+  return data;
 }
 
 export async function updateBudget(id, form, token) {
@@ -85,15 +87,25 @@ export async function deleteBudget(id, token) {
   return data;
 }
 
-export async function getBudgetSummary(token) {
+export async function getBudgetSummary(token, query = {}) {
   const API_URL = process.env.NEXT_PUBLIC_API;
+  const params = new URLSearchParams();
 
-  const response = await fetch(`${API_URL}/api/budgets/summary`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+  Object.entries(query).forEach(([key, value]) => {
+    if (value !== "" && value !== null && value !== undefined) {
+      params.append(key, value);
+    }
   });
+
+  const response = await fetch(
+    `${API_URL}/api/budgets/summary?${params.toString()}`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
 
   const data = await response.json();
 
