@@ -11,6 +11,9 @@ import { getCurrentMonth, getCurrentYear } from "@/lib/getCurrentDate";
 import { getSelectedLabel } from "@/lib/getSelectedLabel";
 import { months } from "@/constants/global.constants";
 import { Spinner } from "@/components/ui/spinner";
+import TransactionAddDialog from "../transactions/TransactionAddDialog";
+import { addTransaction } from "@/services/transaction.service";
+import { toast } from "@/components/ui/toast";
 
 export default function DashboardClient() {
   const { getToken, isLoaded, isSignedIn } = useAuth();
@@ -26,7 +29,8 @@ export default function DashboardClient() {
     netIncome: 0,
   });
   const [pageLoading, setPageLoading] = useState(true);
-
+  const [formOpen, setFormOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const currentMonth = getSelectedLabel(months, getCurrentMonth());
   const currentYear = getCurrentYear();
 
@@ -54,6 +58,30 @@ export default function DashboardClient() {
     loadUserAndData();
   }, [isLoaded, isSignedIn]);
 
+  async function handleSubmit(form) {
+    try {
+      setLoading(true);
+
+      const token = await getToken();
+      const result = await addTransaction(form, token);
+      toast.add({
+        type: "success",
+        description: result.message,
+      });
+      loadUserAndData();
+      setFormOpen(false);
+    } catch (error) {
+      console.error(error);
+      toast.add({
+        type: "error",
+        description: error.message,
+      });
+      setFormOpen(false);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   if (pageLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -75,13 +103,24 @@ export default function DashboardClient() {
             {currentYear}.
           </p>
         </div>
-        <Button size="lg" className="py-5 px-6">
+        <Button
+          size="lg"
+          className="py-5 px-6"
+          onClick={() => setFormOpen(true)}
+        >
           <Plus />
           Add Transaction
         </Button>
       </div>
 
       <DashboardSummary summary={summary} />
+
+      <TransactionAddDialog
+        open={formOpen}
+        onOpenChange={setFormOpen}
+        onSubmit={handleSubmit}
+        loading={loading}
+      />
     </div>
   );
 }
