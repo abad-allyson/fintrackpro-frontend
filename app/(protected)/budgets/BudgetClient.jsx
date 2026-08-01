@@ -12,6 +12,7 @@ import ConfirmDeleteDialog from "@/components/ConfirmDeleteDialog";
 import BudgetSummary from "./BudgetSummary";
 import Pagination from "./Pagination";
 import { toast } from "@/components/ui/toast";
+import { Spinner } from "@/components/ui/spinner";
 
 import {
   getAllBudgets,
@@ -40,30 +41,36 @@ export default function BudgetsClient() {
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [pageRange, setPageRange] = useState("");
+  const [pageLoading, setPageLoading] = useState(true);
 
   const { getToken } = useAuth();
 
   async function getBudgetsData(currentFilters = filters) {
     try {
+      setPageLoading(true);
       const token = await getToken();
 
-      const allBudgets = await getAllBudgets(token, {
-        ...currentFilters,
-        page,
-      });
-      const budgetsSummary = await getBudgetSummary(token, {
-        ...currentFilters,
-        page,
-      });
+      const [allBudgets, budgetsSummary] = await Promise.all([
+        getAllBudgets(token, {
+          ...currentFilters,
+          page,
+        }),
+        getBudgetSummary(token, {
+          ...currentFilters,
+          page,
+        }),
+      ]);
 
       setBudgets(allBudgets.items);
       setBudgetsSummary(budgetsSummary);
     } catch (error) {
       console.error(error);
+    } finally {
+      setPageLoading(false);
     }
   }
 
@@ -152,9 +159,20 @@ export default function BudgetsClient() {
     }
   }
 
+  if (pageLoading) {
+    return (
+      <div className="flex flex-col gap-6 py-10 px-12 h-screen">
+        <BudgetHeader onAdd={handleAdd} />
+        <div className="flex-1  flex items-center justify-center">
+          <Spinner className="size-8" />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-6 py-10 px-12">
-      <BudgetHeader onAdd={handleAdd} date={filters} />
+      <BudgetHeader onAdd={handleAdd} />
       <BudgetSummary summary={budgetsSummary} />
 
       <BudgetAddDialog

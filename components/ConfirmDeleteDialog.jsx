@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function ConfirmDeleteDialog({
   open,
@@ -51,7 +52,7 @@ export default function ConfirmDeleteDialog({
             className="flex-1 py-5 px-6 bg-destructive text-white"
             variant="destructive"
           >
-            {loading ? "Deleting..." : "Delete"}
+            {loading ? <Spinner className="mx-auto h-4 w-4" /> : "Delete"}
           </Button>
         </div>
       </DialogContent>

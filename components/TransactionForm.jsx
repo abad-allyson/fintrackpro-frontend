@@ -17,6 +17,7 @@ import {
 import { Field, FieldSet, FieldLabel } from "@/components/ui/field";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { categories } from "@/constants/global.constants";
+import { Spinner } from "@/components/ui/spinner";
 
 const initialForm = {
   date: "",
@@ -190,7 +191,17 @@ export default function TransactionForm({
           className="flex-1 py-5 px-6"
           size="lg"
         >
-          {isEdit ? "Save Changes" : "Add Transaction"}
+          {loading ? (
+            isEdit ? (
+              "Saving Changes..."
+            ) : (
+              <Spinner className="mx-auto h-4 w-4" />
+            )
+          ) : isEdit ? (
+            "Save Changes"
+          ) : (
+            "Add Transaction"
+          )}
         </Button>
       </div>
     </form>

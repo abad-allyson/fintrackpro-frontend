@@ -1,6 +1,6 @@
 "user client";
 
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import DashboardClient from "./DashboardClient";
 
@@ -14,8 +14,6 @@ export default async function Page() {
   if (!isAuthenticated) {
     redirect("/sign-in");
   }
-
-  const user = await currentUser();
 
   return <DashboardClient />;
 }

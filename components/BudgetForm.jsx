@@ -15,6 +15,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { categories, months, years } from "@/constants/global.constants";
+import { Spinner } from "@/components/ui/spinner";
 
 const initialForm = {
   category: "",
@@ -131,13 +132,17 @@ export default function BudgetForm({
           className="flex-1 py-5 px-6"
           size="lg"
         >
-          {loading
-            ? isEdit
-              ? "Saving Changes..."
-              : "Adding Budget..."
-            : isEdit
-              ? "Save Changes"
-              : "Add Budget"}
+          {loading ? (
+            isEdit ? (
+              "Saving Changes..."
+            ) : (
+              <Spinner className="mx-auto h-4 w-4" />
+            )
+          ) : isEdit ? (
+            "Save Changes"
+          ) : (
+            "Add Budget"
+          )}
         </Button>
       </div>
     </form>

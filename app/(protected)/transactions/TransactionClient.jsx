@@ -11,7 +11,7 @@ import TransactionAddDialog from "./TransactionAddDialog";
 import ConfirmDeleteDialog from "@/components/ConfirmDeleteDialog";
 import Pagination from "./Pagination";
 import { toast } from "@/components/ui/toast";
-
+import { Spinner } from "@/components/ui/spinner";
 import {
   getAllTransactions,
   deleteTransaction,
@@ -39,11 +39,13 @@ export default function TransactionsClient() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [pageRange, setPageRange] = useState("");
+  const [pageLoading, setPageLoading] = useState(true);
 
   const { getToken } = useAuth();
 
   async function getTransactions(currentFilters = filters) {
     try {
+      setPageLoading(true);
       const token = await getToken();
 
       const data = await getAllTransactions(token, { ...currentFilters, page });
@@ -53,6 +55,8 @@ export default function TransactionsClient() {
       setPageRange(data.pageRange);
     } catch (error) {
       console.error(error);
+    } finally {
+      setPageLoading(false);
     }
   }
 
@@ -143,6 +147,17 @@ export default function TransactionsClient() {
     } finally {
       setLoading(false);
     }
+  }
+
+  if (pageLoading) {
+    return (
+      <div className="flex flex-col gap-6 py-10 px-12 h-screen">
+        <TransactionHeader onAdd={handleAdd} />
+        <div className="flex-1  flex items-center justify-center">
+          <Spinner className="size-8" />
+        </div>
+      </div>
+    );
   }
 
   return (

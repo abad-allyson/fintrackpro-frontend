@@ -10,6 +10,7 @@ import DashboardSummary from "./DashboardSummary";
 import { getCurrentMonth, getCurrentYear } from "@/lib/getCurrentDate";
 import { getSelectedLabel } from "@/lib/getSelectedLabel";
 import { months } from "@/constants/global.constants";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function DashboardClient() {
   const { getToken, isLoaded, isSignedIn } = useAuth();
@@ -24,20 +25,27 @@ export default function DashboardClient() {
     totalExpense: 0,
     netIncome: 0,
   });
+  const [pageLoading, setPageLoading] = useState(true);
 
   const currentMonth = getSelectedLabel(months, getCurrentMonth());
   const currentYear = getCurrentYear();
 
   async function loadUserAndData() {
     try {
+      setPageLoading(true);
       const token = await getToken();
 
-      const user = await getCurrentUser(token);
-      const dashboardSummary = await getDashboardSummary(token);
+      const [userResponse, dashboardSummary] = await Promise.all([
+        getCurrentUser(token),
+        getDashboardSummary(token),
+      ]);
+
       setSummary(dashboardSummary);
-      setCurrentUser(user.data);
+      setCurrentUser(userResponse.data);
     } catch (error) {
       console.error(error);
+    } finally {
+      setPageLoading(false);
     }
   }
 
@@ -45,6 +53,14 @@ export default function DashboardClient() {
     if (!isLoaded || !isSignedIn) return;
     loadUserAndData();
   }, [isLoaded, isSignedIn]);
+
+  if (pageLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Spinner className="size-8" />
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-4 py-10 px-12">
