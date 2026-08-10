@@ -91,7 +91,7 @@ export default function DashboardClient() {
   }
 
   return (
-    <div className="flex flex-col gap-4 py-10 px-12">
+    <div className="flex flex-col gap-4 py-10 px-12 max-w-7xl mx-auto">
       {/* Welcome Message */}
       <div className="flex items-center gap-2 ">
         <div className="flex-1">

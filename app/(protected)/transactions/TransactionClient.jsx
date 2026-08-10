@@ -161,7 +161,7 @@ export default function TransactionsClient() {
   }
 
   return (
-    <div className="flex flex-col gap-6 py-10 px-12">
+    <div className="flex flex-col gap-6 py-10 px-12 max-w-7xl mx-auto">
       <TransactionHeader onAdd={handleAdd} />
 
       <TransactionFilters filters={filters} setFilters={setFilters} />

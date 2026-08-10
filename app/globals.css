@@ -32,6 +32,7 @@
   --color-accent-2-foreground: var(--accent-2-foreground);
   --color-accent-15: var(--accent-15);
   --color-accent-15-foreground: var(--accent-15-foreground);
+  --color-destructive-2: var(--destructive-2);
   --color-muted-foreground: var(--muted-foreground);
   --color-muted: var(--muted);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -90,6 +91,7 @@
 
   /* Status */
   --destructive: #d03f3b;
+  --destructive-2: #d0403b1f;
   --success: #43b75d;
   --warning: #ffaa00;
   --info: #0095ff;

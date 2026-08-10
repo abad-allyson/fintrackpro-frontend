@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { TrendingUp, BanknoteArrowDown } from "lucide-react";
+import { TrendingUp, BanknoteArrowDown, HandCoins } from "lucide-react";
 
 export default function DashboardSummary({ summary }) {
   return (
@@ -30,8 +30,8 @@ export default function DashboardSummary({ summary }) {
         </Card>
         <Card className="p-8">
           <div className="flex flex-row items-center space-y-0 gap-4">
-            <div className="bg-muted p-4 rounded-sm ">
-              <BanknoteArrowDown className="h-8 w-8 text-secondary " />
+            <div className="bg-destructive-2 p-4 rounded-sm">
+              <BanknoteArrowDown className="h-8 w-8 text-destructive opacity-100" />
             </div>
             <div>
               <CardTitle className=" font-semibold">Total Expenses</CardTitle>
@@ -46,7 +46,7 @@ export default function DashboardSummary({ summary }) {
         <Card className="p-8">
           <div className="flex flex-row items-center space-y-0 gap-4">
             <div className="bg-accent-15 p-4 rounded-sm ">
-              <TrendingUp className="h-8 w-8 text-accent-2 " />
+              <HandCoins className="h-8 w-8 text-accent-2 " />
             </div>
             <div>
               <CardTitle className=" font-semibold">Net Income</CardTitle>

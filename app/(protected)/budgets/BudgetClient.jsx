@@ -41,10 +41,7 @@ export default function BudgetsClient() {
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   const [formOpen, setFormOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [pageRange, setPageRange] = useState("");
+  const [loading, setLoading] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
 
   const { getToken } = useAuth();
@@ -57,11 +54,9 @@ export default function BudgetsClient() {
       const [allBudgets, budgetsSummary] = await Promise.all([
         getAllBudgets(token, {
           ...currentFilters,
-          page,
         }),
         getBudgetSummary(token, {
           ...currentFilters,
-          page,
         }),
       ]);
 
@@ -76,7 +71,7 @@ export default function BudgetsClient() {
 
   useEffect(() => {
     getBudgetsData();
-  }, [filters, page]);
+  }, [filters]);
 
   function handleRowClick(budget) {
     setSelectedBudget(budget);
@@ -171,7 +166,7 @@ export default function BudgetsClient() {
   }
 
   return (
-    <div className="flex flex-col gap-6 py-10 px-12">
+    <div className="flex flex-col gap-6 py-8 px-12 max-w-7xl mx-auto">
       <BudgetHeader onAdd={handleAdd} />
       <BudgetSummary summary={budgetsSummary} />
 
@@ -193,13 +188,6 @@ export default function BudgetsClient() {
         budget={selectedBudget}
         onEdit={handleEdit}
         onDeleteClick={() => setConfirmDeleteOpen(true)}
-      />
-
-      <Pagination
-        page={page}
-        totalPages={totalPages}
-        onPageChange={setPage}
-        pageRange={pageRange}
       />
 
       <ConfirmDeleteDialog
