@@ -53,28 +53,28 @@
 
 :root {
   /* Base */
-  --background: #fbfbfb;
-  --foreground: #2c2c2e;
+  --background: #fefefe;
+  --foreground: #363636;
 
   /* Cards */
   --card: #ffffff;
-  --card-foreground: #2c2c2e;
+  --card-foreground: #363636;
 
   /* Popovers */
   --popover: #ffffff;
-  --popover-foreground: #2c2c2e;
+  --popover-foreground: #363636;
 
   /* Brand */
-  --primary: #2c2c2e;
-  --primary-foreground: #fbfbfb;
+  --primary: #363636;
+  --primary-foreground: #fefefe;
 
   /* Neutral */
   --secondary: #8d8d8f;
-  --secondary-foreground: #fbfbfb;
+  --secondary-foreground: #363636;
 
   /* Surface */
-  --muted: #efedf0;
-  --muted-foreground: #8d8d8f;
+  --muted: #fafafa;
+  --muted-foreground: #363636;
 
   /* Accent */
   --accent: #acf365;

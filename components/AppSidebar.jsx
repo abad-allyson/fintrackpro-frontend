@@ -10,10 +10,6 @@ import {
   Grid2X2,
   ArrowLeftRight,
   CircleDollarSign,
-  Calculator,
-  ReceiptText,
-  Landmark,
-  Tag,
   Settings,
 } from "lucide-react";
 
@@ -51,26 +47,7 @@ const data = {
       url: "/budgets",
       icon: CircleDollarSign,
     },
-    {
-      title: "Tax Estimator",
-      url: "/tax-estimator",
-      icon: Calculator,
-    },
-    {
-      title: "Receipts",
-      url: "/receipts",
-      icon: ReceiptText,
-    },
-    {
-      title: "Bank Accounts",
-      url: "/bank-accounts",
-      icon: Landmark,
-    },
-    {
-      title: "Subscription",
-      url: "/subscription",
-      icon: Tag,
-    },
+
     {
       title: "Settings",
       url: "/settings",
